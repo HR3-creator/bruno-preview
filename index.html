@@ -132,6 +132,36 @@ dialog::backdrop{background:rgba(8,10,22,.64)}
 @media (max-width:640px){.d-grid{grid-template-columns:1fr}.d-media img{max-height:42vh}:root{--pole-w:26px}}
 @media (prefers-reduced-motion:reduce){.led,.row.in .settle{animation:none}.swing{transform:none}.frame,.hat-art{transition:none}}
 .btn.added{background:var(--street)!important;border-color:var(--street)!important;color:#fff!important}
+
+/* Realistic NYC hardware: galvanized steel arms, banded clamps, eye nuts, granite curb with steel nosing, cast-iron base */
+.arm{height:12px;top:-1px;border-radius:2px 6px 6px 2px;
+  background:linear-gradient(180deg,rgba(255,255,255,.55) 0,rgba(255,255,255,.12) 22%,rgba(0,0,0,0) 40%,rgba(0,0,0,.35) 75%,rgba(0,0,0,.6) 100%),
+    var(--pole-tex) center / 140px auto repeat,#7f878d;
+  background-blend-mode:normal,luminosity,normal;box-shadow:0 5px 7px rgba(0,0,0,.35),inset 0 0 0 1px rgba(0,0,0,.25)}
+.row.right .arm{border-radius:2px 6px 6px 2px}.row.left .arm{border-radius:6px 2px 2px 6px}
+.clamp{top:3px;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:transparent;
+  border:3.5px solid #4a5157;box-shadow:inset 1px 1px 0 rgba(255,255,255,.45),inset -1px -1px 0 rgba(0,0,0,.5),0 2px 3px rgba(0,0,0,.4);z-index:1}
+.clamp::after{content:"";position:absolute;left:50%;top:-12px;width:9px;height:9px;margin-left:-4.5px;border-radius:2px;
+  background:linear-gradient(90deg,#2a2f33,#9aa3aa 45%,#3a4045);box-shadow:0 1px 1px rgba(0,0,0,.5)}
+.collar{top:-9px;height:30px;width:calc(var(--pole-w) + 8px);border-radius:3px;
+  background:linear-gradient(90deg,rgba(0,0,0,.65),rgba(255,255,255,.28) 38%,rgba(255,255,255,.08) 52%,rgba(0,0,0,.7)),
+    repeating-linear-gradient(180deg,transparent 0 4px,rgba(0,0,0,.35) 4px 5px,transparent 5px 20px,rgba(0,0,0,.35) 20px 21px),#8d959b;
+  box-shadow:0 3px 5px rgba(0,0,0,.4)}
+.collar::after{content:"";position:absolute;top:9px;width:10px;height:12px;border-radius:2px;background:linear-gradient(90deg,#2b3034,#a6aeb4 50%,#2b3034)}
+.row.right .collar::after{right:-8px}.row.left .collar::after{left:-8px}
+.hookwire{filter:drop-shadow(1.5px 2.5px 1.5px rgba(0,0,0,.45))}
+.curb{height:30px;
+  background:linear-gradient(180deg,rgba(255,255,255,.28) 0,rgba(255,255,255,.08) 55%,rgba(0,0,0,0) 56%),
+    linear-gradient(180deg,transparent 0 58%,#2c2b29 58%,#6a5646 61%,#3a3633 64%,rgba(0,0,0,.42) 64%,rgba(0,0,0,.28) 100%),
+    var(--concrete-tex) center 30% / 520px auto repeat,#b8b4ab;
+  background-blend-mode:normal,normal,luminosity,normal;box-shadow:0 10px 14px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.4)}
+.base{top:-6px;width:118px;height:40px;border-radius:2px 2px 4px 4px;clip-path:polygon(16% 0,84% 0,100% 100%,0 100%);
+  background:radial-gradient(circle at 14% 78%,#101214 0 3px,rgba(200,205,210,.5) 3.5px,transparent 4.5px),
+    radial-gradient(circle at 86% 78%,#101214 0 3px,rgba(200,205,210,.5) 3.5px,transparent 4.5px),
+    linear-gradient(180deg,rgba(255,255,255,.12),transparent 30%,rgba(0,0,0,.35)),
+    linear-gradient(90deg,#15181b,#4d555b 35%,#5f676d 48%,#23272a 80%,#121416),
+    radial-gradient(ellipse at 70% 60%,rgba(120,60,30,.35),transparent 60%);
+  filter:drop-shadow(0 6px 6px rgba(0,0,0,.45))}
 </style>
 <div class="sky" aria-hidden="true">
   <div class="ph day" id="phDay"></div><div class="ph gold" id="phGold"></div><div class="ph night" id="phNight"></div>
@@ -299,7 +329,11 @@ const CONFIG = {
       const ar = it.image ? (cr.w * cr.nw) / (cr.h * cr.nh) : (isHat ? 1.25 : it.ratio);
       const scale = isHat ? 1 : (ar > 1 ? 1.12 : ar < .75 ? .85 : 1);
       const wire = isHat
-        ? `<svg class="wire" viewBox="0 0 100 46" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><path d="M50 0v14a7 7 0 1 1-7 7" fill="none" stroke="#1F2427" stroke-width="3" stroke-linecap="round"/><path d="M43 21v25" stroke="#1F2427" stroke-width="2"/></svg>`
+        ? `<svg class="wire hookwire" viewBox="0 0 100 46" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+            <path d="M43 21v25" stroke="#2c3135" stroke-width="1.9"/><path d="M43.5 21v25" stroke="rgba(220,226,230,.55)" stroke-width=".6"/>
+            <path d="M50 0v14a7 7 0 1 1-7 7" fill="none" stroke="#3b4247" stroke-width="3.4" stroke-linecap="round"/>
+            <path d="M49.2 1v13a7.8 7.8 0 1 1-7.4 7.6" fill="none" stroke="rgba(236,240,243,.75)" stroke-width="1" stroke-linecap="round"/>
+            <path d="M50.9 2v12a6.2 6.2 0 1 1-6.3 6.6" fill="none" stroke="rgba(10,12,14,.55)" stroke-width=".8" stroke-linecap="round"/></svg>`
         : `<svg class="wire" viewBox="0 0 100 46" preserveAspectRatio="none" aria-hidden="true"><path d="M50 2 L6 46 M50 2 L94 46" fill="none" stroke="#1F2427" stroke-width="1.6" vector-effect="non-scaling-stroke"/><circle cx="50" cy="3" r="3" fill="#1F2427"/></svg>`;
       const ratioCss = isHat ? "400 / 320" : `600 / ${Math.round(600 / (it.ratio || 1))}`;
       const art = it.image
