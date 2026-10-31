@@ -162,6 +162,14 @@ dialog::backdrop{background:rgba(8,10,22,.64)}
     linear-gradient(90deg,#15181b,#4d555b 35%,#5f676d 48%,#23272a 80%,#121416),
     radial-gradient(ellipse at 70% 60%,rgba(120,60,30,.35),transparent 60%);
   filter:drop-shadow(0 6px 6px rgba(0,0,0,.45))}
+
+/* Sidewalk signature: letters pressed into the wet concrete, like NYC sidewalk stamps. Darker cast fill, lit lower edge, shadowed upper edge. */
+.stencil{margin:30px 0 4px;transform:rotate(-1.2deg);mix-blend-mode:normal;color:transparent;
+  font:800 clamp(34px,9.2vw,76px)/1 var(--f-sign);letter-spacing:.14em;padding-left:.14em;
+  background:linear-gradient(180deg,rgba(18,18,20,.62),rgba(30,30,32,.5)),var(--concrete-tex) center / 420px auto repeat,#5a5853;
+  -webkit-background-clip:text;background-clip:text;
+  filter:drop-shadow(0 -2px 0 rgba(0,0,0,.55)) drop-shadow(0 2px 0 rgba(255,255,255,.6)) drop-shadow(0 0 1px rgba(0,0,0,.35))}
+.stencil small{margin-top:16px;font:700 clamp(14px,3.6vw,26px)/1 var(--f-mono);letter-spacing:.5em;padding-left:.5em}
 </style>
 <div class="sky" aria-hidden="true">
   <div class="ph day" id="phDay"></div><div class="ph gold" id="phGold"></div><div class="ph night" id="phNight"></div>
@@ -189,7 +197,6 @@ dialog::backdrop{background:rgba(8,10,22,.64)}
 <footer class="sidewalk" id="sidewalk">
   <span class="curb" aria-hidden="true"></span><span class="base" aria-hidden="true"></span>
   <p class="stencil" id="stencil"></p>
-  <a class="up" href="gallery.html">Walk to the gallery wall &rarr;</a>
   <button class="up ghost" id="upBtn" type="button">Back up the pole</button>
 </footer>
 
