@@ -116,6 +116,7 @@ dialog::backdrop{background:rgba(8,10,22,.7)}
 </dialog>
 
 <script src="data.js"></script>
+<script src="shop.js"></script>
 <script>
 (() => {
   const $ = id => document.getElementById(id);
@@ -179,10 +180,11 @@ dialog::backdrop{background:rgba(8,10,22,.7)}
     $("dStatus").textContent = w.status === "Available" ? "For sale · " + price(w.price) : st.label;
     $("dMedium").textContent = w.medium || "TBD"; $("dSize").textContent = w.size || "TBD"; $("dYear").textContent = w.year || "TBD";
     $("dActions").innerHTML = (w.status === "Available"
-      ? `<a class="btn primary" href="index.html#${encodeURIComponent(w.id)}">See it on the pole</a>`
+      ? `<a class="btn primary" href="item.html?id=${encodeURIComponent(w.id)}">View item</a><button class="btn ghost" type="button" id="dAdd">${window.Shop && window.Shop.has(w.id) ? "In cart" : "Add to cart"}</button>`
       : `<button class="btn primary" type="button" id="dAsk">Ask about a commission</button>`)
       + `<button class="btn ghost" type="button" id="dClose">Close</button>`;
     $("dMsg").textContent = "";
+    const add = $("dAdd"); if (add) add.addEventListener("click", () => { if (window.Shop.has(w.id)) { dlg.close(); window.Shop.open(); } else { window.Shop.add(w.id); add.textContent = "In cart"; $("dMsg").textContent = "Added to your cart."; } });
     const ask = $("dAsk"); if (ask) ask.addEventListener("click", () => { $("dMsg").textContent = "The inquiry form goes live with the full build."; });
     $("dClose").addEventListener("click", () => dlg.close());
     typeof dlg.showModal === "function" ? dlg.showModal() : dlg.setAttribute("open", "");

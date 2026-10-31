@@ -125,12 +125,13 @@ dialog::backdrop{background:rgba(8,10,22,.64)}
 .d-info dd{margin:0;font-size:15px;line-height:1.5}
 .d-note{margin:0;padding:10px 12px;border-left:3px solid var(--led);background:rgba(255,122,31,.09);font-size:13.5px;line-height:1.5}
 .d-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:auto}
-.btn{padding:12px 18px;border-radius:5px;border:2px solid var(--ink);cursor:pointer;font:800 13px/1 var(--f-sign);letter-spacing:.1em;text-transform:uppercase}
+.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;padding:12px 18px;border-radius:5px;border:2px solid var(--ink);cursor:pointer;font:800 13px/1 var(--f-sign);letter-spacing:.1em;text-transform:uppercase}
 .btn.primary{background:var(--ink);color:var(--enamel)}
 .btn.ghost{background:transparent;color:var(--ink)}
 .d-msg{margin:0;font-size:13.5px;line-height:1.45;color:var(--muted);min-height:1.4em}
 @media (max-width:640px){.d-grid{grid-template-columns:1fr}.d-media img{max-height:42vh}:root{--pole-w:26px}}
 @media (prefers-reduced-motion:reduce){.led,.row.in .settle{animation:none}.swing{transform:none}.frame,.hat-art{transition:none}}
+.btn.added{background:var(--street)!important;border-color:var(--street)!important;color:#fff!important}
 </style>
 <div class="sky" aria-hidden="true">
   <div class="ph day" id="phDay"></div><div class="ph gold" id="phGold"></div><div class="ph night" id="phNight"></div>
@@ -170,13 +171,14 @@ dialog::backdrop{background:rgba(8,10,22,.64)}
       <h2 id="dTitle"></h2>
       <dl><dt>Medium</dt><dd id="dMedium"></dd><dt>Size</dt><dd id="dSize"></dd><dt>Price</dt><dd id="dPrice"></dd></dl>
       <p class="d-note" id="dNote" hidden></p>
-      <div class="d-actions"><button class="btn primary" id="dCart" type="button">Add to cart</button><button class="btn ghost" id="dClose" type="button">Close</button></div>
+      <div class="d-actions"><button class="btn primary" id="dCart" type="button">Add to cart</button><a class="btn ghost" id="dView" href="#">View item</a><button class="btn ghost" id="dClose" type="button">Close</button></div>
       <p class="d-msg" id="dMsg" role="status"></p>
     </div>
   </div>
 </dialog>
 
 <script src="data.js"></script>
+<script src="shop.js"></script>
 <script>
 /* =====================================================================
    EDIT HERE. Everything on the page comes from this one object.
@@ -358,12 +360,23 @@ const CONFIG = {
     $("dMedium").textContent = it.medium || "TBD"; $("dSize").textContent = it.size || "TBD"; $("dPrice").textContent = price(it.price);
     const note = $("dNote"); note.hidden = !!it.image; note.textContent = "Placeholder artwork. Replace it by adding a photo URL to this item in CONFIG.";
     $("dMsg").textContent = "";
+    current = it.id; $("dView").href = "item.html?id=" + encodeURIComponent(it.id); syncCart();
     typeof dlg.showModal === "function" ? dlg.showModal() : dlg.setAttribute("open", "");
   });
+  let current = null;
+  function syncCart() {
+    const b = $("dCart"), S = window.Shop; if (!S || !current) return;
+    const inCart = S.has(current);
+    b.textContent = inCart ? "In cart · View cart" : "Add to cart"; b.classList.toggle("added", inCart);
+  }
+  if (window.Shop) window.Shop.onChange(syncCart);
   const closeDlg = () => (typeof dlg.close === "function" ? dlg.close() : dlg.removeAttribute("open"));
   $("dClose").addEventListener("click", closeDlg);
   dlg.addEventListener("click", e => { if (e.target === dlg) closeDlg(); });
-  $("dCart").addEventListener("click", () => { $("dMsg").textContent = "Checkout isn't connected in this prototype. It goes live with the store build."; });
+  $("dCart").addEventListener("click", () => {
+    const S = window.Shop; if (!S || !current) return;
+    if (S.has(current)) { closeDlg(); S.open(); } else { S.add(current); $("dMsg").textContent = "Added to your cart."; }
+  });
   $("upBtn").addEventListener("click", () => scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" }));
 
   /* Scroll: day > golden hour > night, slow parallax, sway spring */

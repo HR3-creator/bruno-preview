@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Bruno Saquicela · Piece</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;800&family=Overpass+Mono:wght@400;700&display=swap">
+<style>
+/* Item page: one piece, presented like a lit specimen on concrete, with a museum-style enamel card. */
+:root{--ink:#16181B;--muted:#55595F;--enamel:#F2EFE6;--street:#1C6644;--led:#FF7A1F;--tag:#EFE4C8;
+  --f:"Overpass",system-ui,sans-serif;--mono:"Overpass Mono",ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}
+html,body{margin:0;background:#5f5c56;color:var(--ink)}
+body{font-family:var(--f);-webkit-font-smoothing:antialiased;min-height:100dvh;
+  background:radial-gradient(ellipse 70% 45% at 50% 18%,rgba(255,236,200,.42),transparent 70%),
+    linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,.45)),url("img/concrete-1920.webp") center top / 900px auto repeat,#6d6a63}
+[hidden]{display:none!important}
+button{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--led);outline-offset:3px}
+.top{display:flex;gap:10px;flex-wrap:wrap;padding:max(14px,env(safe-area-inset-top,0px)) 16px 0;padding-right:150px}
+.crumb{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:7px;background:var(--street);color:#fff;text-decoration:none;
+  font:800 13px/1 var(--f);letter-spacing:.08em;text-transform:uppercase;box-shadow:inset 0 0 0 2px var(--street),inset 0 0 0 4px #F4F4F0,0 6px 14px rgba(0,0,0,.3)}
+main{max-width:1080px;margin:0 auto;padding:24px 16px 72px;display:grid;grid-template-columns:minmax(0,1fr);gap:26px}
+main>*{min-width:0}
+@media (min-width:860px){main{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);align-items:start;padding-top:40px}}
+.stage{position:relative;min-height:320px;display:grid;place-items:center;padding:28px 12px 22px}
+.stage img{display:block;max-width:min(100%,520px);max-height:62vh;object-fit:contain;filter:drop-shadow(0 26px 30px rgba(0,0,0,.55))}
+.stage.photo img{border-radius:6px;max-height:66vh}
+.toggle{display:flex;justify-content:center;gap:6px;margin-top:6px}
+.toggle button{min-height:40px;padding:0 14px;border:2px solid #F2EFE6;border-radius:20px;background:transparent;color:#F2EFE6;font:700 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+.toggle button[aria-pressed="true"]{background:#F2EFE6;color:var(--ink)}
+.card{background:var(--enamel);border-radius:10px;padding:24px 22px;box-shadow:0 24px 50px rgba(0,0,0,.4)}
+.kind{margin:0;font:700 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+h1{margin:10px 0 6px;font:800 clamp(28px,6vw,40px)/1.05 var(--f);letter-spacing:-.01em}
+.price{margin:0;font:700 22px/1.2 var(--mono)}
+.badge{display:inline-block;margin-top:14px;padding:6px 10px;border:2px solid var(--street);border-radius:4px;color:var(--street);font:700 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;transform:rotate(-1.5deg)}
+.badge.off{border-color:#7a2b10;color:#7a2b10}
+.lede{margin:18px 0 0;font-size:16px;line-height:1.55}
+dl{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:20px 0 0;padding:16px 0 0;border-top:1px dashed #b9b3a4;font-size:15px}
+dt{font:700 12px/1.6 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+dd{margin:0}
+.actions{display:grid;gap:10px;margin-top:22px}
+.btn{display:flex;align-items:center;justify-content:center;min-height:54px;border:2px solid var(--ink);border-radius:8px;background:var(--ink);color:#F4EFE2;
+  font:800 15px/1 var(--f);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.added{background:var(--street);border-color:var(--street)}
+.fine{margin:16px 0 0;font-size:13px;line-height:1.5;color:var(--muted)}
+.msg{min-height:1.2em;margin:10px 0 0;font-size:14px;color:var(--street);font-weight:600}
+.more{grid-column:1/-1}
+.more h2{margin:10px 0 14px;color:#F2EFE6;font:800 20px/1 var(--f);letter-spacing:.04em;text-transform:uppercase}
+.strip{display:flex;gap:14px;overflow-x:auto;padding:4px 2px 12px;scroll-snap-type:x mandatory}
+.strip a{flex:none;width:136px;scroll-snap-align:start;text-decoration:none;color:#F2EFE6}
+.strip .th{height:120px;display:grid;place-items:center}
+.strip img{max-width:100%;max-height:112px;object-fit:contain;filter:drop-shadow(0 10px 10px rgba(0,0,0,.45))}
+.strip span{display:block;margin-top:6px;font:700 11px/1.3 var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.missing{grid-column:1/-1;color:#F2EFE6;text-align:center;padding:60px 0}
+</style>
+<body>
+<nav class="top" aria-label="Site"><a class="crumb" href="index.html">&larr; The pole</a><a class="crumb" href="gallery.html">Gallery wall</a></nav>
+<main id="main">
+  <section aria-label="Images">
+    <div class="stage" id="stage"><img id="pic" alt=""></div>
+    <div class="toggle" id="toggle" hidden role="group" aria-label="Image view">
+      <button type="button" id="vClean" aria-pressed="true">Clean view</button><button type="button" id="vReal" aria-pressed="false">Original photo</button>
+    </div>
+  </section>
+  <section class="card" aria-labelledby="title">
+    <p class="kind" id="kind"></p>
+    <h1 id="title"></h1>
+    <p class="price" id="price"></p>
+    <span class="badge" id="badge"></span>
+    <p class="lede" id="lede"></p>
+    <dl><dt>Medium</dt><dd id="medium"></dd><dt>Size</dt><dd id="size"></dd><dt>Year</dt><dd id="year"></dd><dt>Edition</dt><dd>One of one, handmade in Queens, NY</dd></dl>
+    <div class="actions" id="actions"></div>
+    <p class="msg" id="msg" role="status"></p>
+    <p class="fine" id="fine"></p>
+  </section>
+  <section class="more" id="more" aria-label="More pieces" hidden><h2>More on the pole</h2><div class="strip" id="strip"></div></section>
+</main>
+<script src="data.js"></script>
+<script src="shop.js"></script>
+<script>
+(() => {
+  const $ = id => document.getElementById(id), S = window.Shop, esc = S.esc;
+  const id = new URLSearchParams(location.search).get("id") || "";
+  const w = S.byId.get(id);
+  const visible = w && w.status !== "Exclude" && (w.status !== "Undecided" || window.SHOW_UNDECIDED);
+  if (!visible) {
+    $("main").innerHTML = `<p class="missing">That piece isn't here. <a href="index.html">Back to the pole</a></p>`;
+    return;
+  }
+  document.title = `${w.title} · Bruno Saquicela`;
+  const forSale = w.status === "Available", isHat = w.kind === "hat";
+  $("kind").textContent = `${w.type} · ${w.id}`;
+  $("title").textContent = w.title;
+  $("price").textContent = forSale ? S.money(w.price) : "";
+  $("price").hidden = !forSale;
+  const label = { Available: "For sale", Sold: "Sold" + (w.year ? " " + w.year : ""), "Not for sale": "Not for sale", "Private collection": "Private collection", Undecided: "Status TBD" }[w.status] || w.status;
+  $("badge").textContent = label; $("badge").classList.toggle("off", !forSale);
+  $("lede").textContent = isHat
+    ? "A hand-embellished beanie by Bruno Saquicela. Every stud, bead, patch and charm is placed by hand, so no two hats are alike."
+    : "An original work by Bruno Saquicela, built from paint, found objects and natural materials.";
+  $("medium").textContent = w.medium || "TBD"; $("size").textContent = w.size || "TBD"; $("year").textContent = w.year || "TBD";
+
+  /* Images: clean flat-lay when one exists, real photo one tap away */
+  const pic = $("pic"), stage = $("stage");
+  const show = clean => {
+    const src = clean && w.pole ? w.pole.image : w.image;
+    pic.src = src; pic.alt = w.title + (clean && w.pole ? " (clean view)" : "");
+    stage.classList.toggle("photo", !w.cutout);
+    $("vClean").setAttribute("aria-pressed", String(clean)); $("vReal").setAttribute("aria-pressed", String(!clean));
+  };
+  if (w.pole) { $("toggle").hidden = false; $("vClean").onclick = () => show(true); $("vReal").onclick = () => show(false); }
+  show(true);
+
+  /* Actions */
+  const actions = $("actions"), msg = $("msg");
+  function renderActions() {
+    if (!forSale) {
+      actions.innerHTML = `<button class="btn" type="button" id="ask">Ask about a commission</button><a class="btn ghost" href="gallery.html">Back to the gallery</a>`;
+      $("ask").onclick = () => { msg.textContent = "The inquiry form goes live with the full build."; };
+      $("fine").textContent = "This piece isn't for sale. Bruno takes commissions for similar work.";
+      return;
+    }
+    const inCart = S.has(w.id);
+    actions.innerHTML = inCart
+      ? `<button class="btn added" type="button" id="open">In your cart · View cart</button><a class="btn ghost" href="checkout.html">Checkout</a>`
+      : `<button class="btn" type="button" id="add">Add to cart</button><a class="btn ghost" href="index.html#${encodeURIComponent(w.id)}">See it on the pole</a>`;
+    const add = $("add"), open = $("open");
+    if (add) add.onclick = () => { S.add(w.id); msg.textContent = "Added to your cart."; };
+    if (open) open.onclick = () => S.open();
+    $("fine").textContent = "Only one exists. It stays available until someone checks out." + (typeof w.price === "number" ? "" : " Price is confirmed by Bruno before payment.");
+  }
+  S.onChange(renderActions);
+
+  /* More pieces for sale */
+  const others = (window.WORKS || []).filter(x => x.status === "Available" && x.id !== w.id).slice(0, 12);
+  if (others.length) {
+    $("more").hidden = false;
+    $("strip").innerHTML = others.map(x => { const p = S.pic(x); return `<a href="item.html?id=${encodeURIComponent(x.id)}"><div class="th"><img src="${esc(p.image)}" alt="" loading="lazy"></div><span>${esc(x.title)}<br>${esc(S.money(x.price))}</span></a>`; }).join("");
+  }
+})();
+</script>
+</body>
+</html>
