@@ -200,7 +200,8 @@ const CONFIG = {
   },
   /* Pole shows every Available piece from data.js (WORKS). Edit data.js, not this. */
   sections: [
-    { name: "Hats", unit: "for sale", kind: "hat", items: (window.WORKS || []).filter(w => w.kind === "hat" && w.status === "Available") },
+    /* The pole uses a clean flat-lay image (w.pole) when one exists; the gallery always shows the real photo (w.image). */
+    { name: "Hats", unit: "for sale", kind: "hat", items: (window.WORKS || []).filter(w => w.kind === "hat" && w.status === "Available").map(w => w.pole ? Object.assign({}, w, { image: w.pole.image, w: w.pole.w, h: w.pole.h }) : w) },
     { name: "Paintings", unit: "for sale", kind: "painting", items: (window.WORKS || []).filter(w => w.kind === "art" && w.status === "Available") }
   ].filter(sec => sec.items.length)
 };
