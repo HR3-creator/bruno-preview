@@ -37,8 +37,9 @@
   /* ---------- UI: floating cart button + drawer ---------- */
   const css = `
   .shop-fab{position:fixed;z-index:60;top:max(14px,env(safe-area-inset-top,0px));right:max(14px,env(safe-area-inset-right,0px));display:flex;align-items:center;gap:8px;
-    height:46px;padding:0 16px 0 13px;border:0;border-radius:23px;background:#16181B;color:#F4EFE2;font:800 14px/1 "Overpass",system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;
-    box-shadow:0 8px 22px rgba(0,0,0,.35);cursor:pointer}
+    height:46px;padding:0 16px 0 13px;border:2px solid rgba(255,255,255,.9);border-radius:23px;background:rgba(255,255,255,.08);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.45);font:800 14px/1 "Overpass",system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;
+    box-shadow:0 6px 18px rgba(0,0,0,.18);cursor:pointer}
+  .shop-fab svg{filter:drop-shadow(0 1px 2px rgba(0,0,0,.45))}
   .shop-fab svg{width:20px;height:20px}
   .shop-fab .n{min-width:22px;height:22px;padding:0 6px;border-radius:11px;background:#FF7A1F;color:#16181B;display:grid;place-items:center;font:800 12px/1 "Overpass Mono",monospace}
   .shop-fab.bump{animation:shopBump .45s ease}
