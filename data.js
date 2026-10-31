@@ -28,7 +28,7 @@ window.WORKS = [
   "id": "H-02",
   "kind": "hat",
   "type": "Hat",
-  "status": "Undecided",
+  "status": "Exclude", "note": "Back view of H-01 (red Jesus hat), removed 2026-10-31",
   "title": "Red studded beanie",
   "medium": "",
   "size": "",
