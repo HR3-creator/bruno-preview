@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Gallery Wall · Bruno Saquicela</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;800&family=Overpass+Mono:wght@400;700&display=swap">
+<style>
+/* Gallery wall: everything Bruno has shown, on a lit concrete wall at night. Reads the same data.js as the pole. */
+:root{
+  --enamel:#F2EFE6; --ink:#16181B; --muted:#55595F; --street:#1C6644; --led:#FF7A1F;
+  --sold:#C2261D; --nfs:#16181B; --tbd:#B7791F;
+  --f-sign:"Overpass","Arial Narrow",system-ui,sans-serif;
+  --f-mono:"Overpass Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:#2A2927;color:var(--ink)}
+body{font-family:var(--f-sign);-webkit-font-smoothing:antialiased;overflow-x:clip;min-height:100vh;
+  background:
+    radial-gradient(ellipse 70% 38% at 50% 0%,rgba(255,214,150,.38),transparent 70%),
+    linear-gradient(180deg,rgba(10,12,20,.55),rgba(10,12,20,.15) 30%,rgba(10,12,20,.45)),
+    url("img/concrete.webp") center top / 900px auto repeat,#6d6a63}
+img{max-width:100%;display:block}
+[hidden]{display:none!important}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--led);outline-offset:4px}
+
+.wrap{max-width:1180px;margin:0 auto;padding:28px max(16px,env(safe-area-inset-right,0px)) 80px max(16px,env(safe-area-inset-left,0px))}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.back{display:inline-block;padding:10px 16px;border-radius:5px;text-decoration:none;background:var(--enamel);color:var(--ink);
+  font:800 12px/1 var(--f-sign);letter-spacing:.12em;text-transform:uppercase;box-shadow:inset 0 0 0 2px var(--enamel),inset 0 0 0 4px var(--ink),0 6px 14px rgba(0,0,0,.3)}
+.lamp{width:120px;height:14px;border-radius:0 0 60px 60px;background:linear-gradient(180deg,#3a3d40,#16181b);box-shadow:0 18px 40px 10px rgba(255,214,150,.25)}
+.blade{display:inline-block;margin:34px auto 0;padding:10px 30px 13px;border-radius:7px;text-align:center;background:var(--street);color:#fff;
+  box-shadow:inset 0 0 0 3px var(--street),inset 0 0 0 5px #F4F4F0,0 12px 24px rgba(0,0,0,.4)}
+.blade h1{margin:0;font:800 clamp(30px,6vw,46px)/1.05 var(--f-sign)}
+.blade p{margin:4px 0 0;font:700 11px/1.3 var(--f-mono);letter-spacing:.2em;text-transform:uppercase;opacity:.92}
+.head{text-align:center}
+.intro{max-width:560px;margin:18px auto 0;color:#EDE8DC;font:400 15px/1.6 var(--f-sign);text-wrap:pretty;text-shadow:0 1px 2px rgba(0,0,0,.6)}
+
+.filters{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:26px 0 8px}
+.chip{padding:9px 14px;border:0;border-radius:999px;cursor:pointer;background:rgba(242,239,230,.14);color:#F2EFE6;
+  font:700 11.5px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;box-shadow:inset 0 0 0 1.5px rgba(242,239,230,.45)}
+.chip[aria-pressed="true"]{background:var(--enamel);color:var(--ink);box-shadow:none}
+.count{text-align:center;margin:6px 0 0;color:#cfc9bc;font:700 11px/1.4 var(--f-mono);letter-spacing:.14em;text-transform:uppercase}
+
+.wall{columns:4 230px;column-gap:34px;margin-top:34px}
+.work{break-inside:avoid;margin:0 0 42px;display:block;width:100%;padding:0;border:0;background:none;cursor:pointer;text-align:left;color:inherit}
+.hang{position:relative;display:block;transform:rotate(var(--tilt,0deg));transition:transform .25s}
+.work:hover .hang{transform:rotate(0) translateY(-3px)}
+.framed,.object,.label > span:first-child{display:block}
+.framed{padding:10px;background:#141414;box-shadow:0 22px 34px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.07)}
+.framed img{width:100%;height:auto;background:#ddd}
+.object img{width:100%;height:auto;filter:drop-shadow(0 20px 22px rgba(0,0,0,.55))}
+.object.hat{padding:0 12%}
+.nail{display:block;width:10px;height:10px;margin:0 auto 10px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#c9ccd0,#3d4247);box-shadow:0 2px 3px rgba(0,0,0,.5)}
+.label{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-top:16px;padding:9px 11px;border-radius:3px;background:var(--enamel);
+  box-shadow:0 6px 12px rgba(0,0,0,.35)}
+.label b{display:block;font:800 13.5px/1.25 var(--f-sign)}
+.label small{display:block;margin-top:2px;font:700 10px/1.3 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.stamp{flex:none;padding:4px 7px;border:2px solid currentColor;border-radius:3px;font:700 10px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;transform:rotate(-4deg)}
+.st-available{color:var(--street)} .st-sold{color:var(--sold)} .st-nfs{color:var(--nfs)} .st-private{color:#5B3A8C} .st-tbd{color:var(--tbd);border-style:dashed}
+.empty{text-align:center;color:#EDE8DC;font:400 15px/1.6 var(--f-sign)}
+
+.foot{margin-top:30px;text-align:center}
+
+dialog{width:min(820px,calc(100vw - 32px));max-height:calc(100dvh - 32px);padding:0;border:0;border-radius:10px;background:var(--enamel);color:var(--ink);box-shadow:0 30px 80px rgba(0,0,0,.6)}
+dialog::backdrop{background:rgba(8,10,22,.7)}
+.d-grid{display:grid;grid-template-columns:1.1fr 1fr}
+.d-media{display:grid;place-items:center;padding:22px;background:#191A1C;min-width:0}
+.d-media img{max-width:100%;max-height:62vh;object-fit:contain}
+.d-info{display:flex;flex-direction:column;gap:14px;padding:26px 24px;min-width:0}
+.d-kind{margin:0;font:700 11px/1.3 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.d-info h2{margin:0;font:800 26px/1.15 var(--f-sign)}
+.d-info dl{display:grid;grid-template-columns:auto 1fr;gap:8px 16px;margin:0}
+.d-info dt{font:700 11px/1.6 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.d-info dd{margin:0;font-size:15px;line-height:1.5}
+.d-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:auto}
+.btn{display:inline-block;text-decoration:none;padding:12px 16px;border-radius:5px;border:2px solid var(--ink);cursor:pointer;font:800 12.5px/1 var(--f-sign);letter-spacing:.1em;text-transform:uppercase}
+.btn.primary{background:var(--ink);color:var(--enamel)} .btn.ghost{background:transparent;color:var(--ink)}
+.d-msg{margin:0;font-size:13.5px;line-height:1.45;color:var(--muted);min-height:1.4em}
+@media (max-width:640px){.d-grid{grid-template-columns:1fr}.d-media img{max-height:42vh}.wall{column-gap:18px}.work{margin-bottom:30px}}
+@media (max-width:520px){.wall{columns:2}.label{flex-direction:column;gap:6px}.framed{padding:6px}}
+@media (prefers-reduced-motion:reduce){.hang,.work:hover .hang{transition:none;transform:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><a class="back" href="index.html">&larr; Back to the pole</a><span class="lamp" aria-hidden="true"></span></div>
+  <header class="head">
+    <div class="blade"><h1>Gallery Wall</h1><p>Bruno Saquicela · Queens, NY</p></div>
+    <p class="intro">Everything Bruno has made and shown: pieces for sale, sold work, and work that stays with him. Tap any piece for details.</p>
+  </header>
+  <div class="filters" role="group" aria-label="Filter by status" id="fStatus"></div>
+  <div class="filters" role="group" aria-label="Filter by type" id="fType"></div>
+  <p class="count" id="count" aria-live="polite"></p>
+  <main class="wall" id="wall"></main>
+  <p class="empty" id="empty" hidden>Nothing here yet.</p>
+  <div class="foot"><a class="back" href="index.html">&larr; Back to the pole</a></div>
+</div>
+
+<dialog id="detail" aria-labelledby="dTitle">
+  <div class="d-grid">
+    <div class="d-media"><img id="dImg" alt=""></div>
+    <div class="d-info">
+      <p class="d-kind" id="dKind"></p>
+      <h2 id="dTitle"></h2>
+      <dl><dt>Status</dt><dd id="dStatus"></dd><dt>Medium</dt><dd id="dMedium"></dd><dt>Size</dt><dd id="dSize"></dd><dt>Year</dt><dd id="dYear"></dd></dl>
+      <div class="d-actions" id="dActions"></div>
+      <p class="d-msg" id="dMsg" role="status"></p>
+    </div>
+  </div>
+</dialog>
+
+<script src="data.js"></script>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const price = p => (typeof p === "number" ? "$" + p.toLocaleString("en-US") : "Price TBD");
+
+  const STATUS = {
+    "Available":          { key: "available", stamp: w => "For sale · " + price(w.price), label: "For sale" },
+    "Sold":               { key: "sold",      stamp: w => "Sold" + (w.year ? " " + w.year : ""), label: "Sold" },
+    "Not for sale":       { key: "nfs",       stamp: () => "Not for sale", label: "Not for sale" },
+    "Private collection": { key: "private",   stamp: () => "Private collection", label: "Private collection" },
+    "Undecided":          { key: "tbd",       stamp: () => "Status TBD", label: "Status TBD" }
+  };
+  const shown = (window.WORKS || []).filter(w => STATUS[w.status] && (w.status !== "Undecided" || window.SHOW_UNDECIDED));
+
+  const fStatus = [["all","All"],["available","For sale"],["sold","Sold"],["nfs","Not for sale"],["private","Private collection"],["tbd","Status TBD"]]
+    .filter(([k]) => k === "all" || shown.some(w => STATUS[w.status].key === k));
+  const fType = [["all","Everything"],["art","Paintings & collage"],["hat","Hats"]].filter(([k]) => k === "all" || shown.some(w => w.kind === k));
+  let state = { status: "all", type: "all" };
+  function chips(el, list, prop) {
+    el.innerHTML = list.map(([k, t]) => `<button class="chip" type="button" data-k="${k}" aria-pressed="${state[prop] === k}">${esc(t)}</button>`).join("");
+    el.addEventListener("click", e => { const b = e.target.closest(".chip"); if (!b) return; state[prop] = b.dataset.k;
+      el.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c === b)); render(); });
+  }
+  chips($("fStatus"), fStatus, "status"); chips($("fType"), fType, "type");
+
+  const wall = $("wall");
+  wall.innerHTML = shown.map((w, i) => {
+    const st = STATUS[w.status], tilt = ((i * 37 % 7) - 3) * .35;
+    const art = w.cutout
+      ? `<span class="object ${w.kind}"><img src="${esc(w.image)}" alt="${esc(w.title)}" width="${w.w}" height="${w.h}" loading="lazy"></span>`
+      : `<span class="framed"><img src="${esc(w.image)}" alt="${esc(w.title)}" width="${w.w}" height="${w.h}" loading="lazy"></span>`;
+    return `<button class="work" type="button" data-id="${esc(w.id)}" data-status="${st.key}" data-kind="${w.kind}" aria-label="${esc(w.title)}, ${esc(st.label)}. Open details.">
+      <span class="nail" aria-hidden="true"></span><span class="hang" style="--tilt:${tilt.toFixed(2)}deg">${art}</span>
+      <span class="label"><span><b>${esc(w.title)}</b><small>${esc(w.id)} · ${esc(w.type)}</small></span><span class="stamp st-${st.key}">${esc(st.stamp(w))}</span></span>
+    </button>`;
+  }).join("");
+
+  function render() {
+    let n = 0;
+    wall.querySelectorAll(".work").forEach(el => {
+      const ok = (state.status === "all" || el.dataset.status === state.status) && (state.type === "all" || el.dataset.kind === state.type);
+      el.hidden = !ok; if (ok) n++;
+    });
+    $("count").textContent = n + (n === 1 ? " piece" : " pieces");
+    $("empty").hidden = n > 0;
+  }
+  render();
+
+  const dlg = $("detail"), byId = new Map(shown.map(w => [w.id, w]));
+  wall.addEventListener("click", e => {
+    const b = e.target.closest(".work"); if (!b) return;
+    const w = byId.get(b.dataset.id), st = STATUS[w.status];
+    $("dImg").src = w.image; $("dImg").alt = w.title;
+    $("dKind").textContent = w.type + " · " + w.id; $("dTitle").textContent = w.title;
+    $("dStatus").textContent = w.status === "Available" ? "For sale · " + price(w.price) : st.label;
+    $("dMedium").textContent = w.medium || "TBD"; $("dSize").textContent = w.size || "TBD"; $("dYear").textContent = w.year || "TBD";
+    $("dActions").innerHTML = (w.status === "Available"
+      ? `<a class="btn primary" href="index.html#${encodeURIComponent(w.id)}">See it on the pole</a>`
+      : `<button class="btn primary" type="button" id="dAsk">Ask about a commission</button>`)
+      + `<button class="btn ghost" type="button" id="dClose">Close</button>`;
+    $("dMsg").textContent = "";
+    const ask = $("dAsk"); if (ask) ask.addEventListener("click", () => { $("dMsg").textContent = "The inquiry form goes live with the full build."; });
+    $("dClose").addEventListener("click", () => dlg.close());
+    typeof dlg.showModal === "function" ? dlg.showModal() : dlg.setAttribute("open", "");
+  });
+  dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
+})();
+</script>
+</body>
+</html>
