@@ -37,7 +37,8 @@ window.WORKS = [
   "image": "img/h02.webp",
   "w": 720,
   "h": 1126,
-  "cutout": true
+  "cutout": true,
+  "pole": {"image": "img/h-02-flat.webp", "w": 495, "h": 720}
  },
  {
   "id": "H-08",
@@ -129,7 +130,8 @@ window.WORKS = [
   "image": "img/h-16.webp",
   "w": 520,
   "h": 528,
-  "cutout": true
+  "cutout": true,
+  "pole": {"image": "img/h-16-flat.webp", "w": 650, "h": 720}
  },
  {
   "id": "H-17",
@@ -159,7 +161,8 @@ window.WORKS = [
   "image": "img/h-19.webp",
   "w": 720,
   "h": 602,
-  "cutout": true
+  "cutout": true,
+  "pole": {"image": "img/h-19-flat.webp", "w": 718, "h": 720}
  },
  {
   "id": "H-21",
@@ -205,7 +208,8 @@ window.WORKS = [
   "image": "img/h-22.webp",
   "w": 709,
   "h": 720,
-  "cutout": true
+  "cutout": true,
+  "pole": {"image": "img/h-22-flat.webp", "w": 651, "h": 720}
  },
  {
   "id": "H-23",
@@ -220,7 +224,8 @@ window.WORKS = [
   "image": "img/h-23.webp",
   "w": 471,
   "h": 477,
-  "cutout": true
+  "cutout": true,
+  "pole": {"image": "img/h-23-flat.webp", "w": 654, "h": 720}
  },
  {
   "id": "H-24",
@@ -251,7 +256,8 @@ window.WORKS = [
   "image": "img/h-13.webp",
   "w": 631,
   "h": 720,
-  "cutout": true
+  "cutout": true,
+  "pole": {"image": "img/h-13-flat.webp", "w": 571, "h": 720}
  },
  {
   "id": "H-25",
@@ -298,7 +304,8 @@ window.WORKS = [
   "image": "img/h-26.webp",
   "w": 639,
   "h": 720,
-  "cutout": true
+  "cutout": true,
+  "pole": {"image": "img/h-26-flat.webp", "w": 658, "h": 720}
  },
  {
   "id": "P-01",

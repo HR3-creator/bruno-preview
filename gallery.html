@@ -84,6 +84,7 @@ dialog::backdrop{background:rgba(8,10,22,.7)}
 @media (max-width:640px){.d-grid{grid-template-columns:1fr}.d-media img{max-height:42vh}.wall{column-gap:18px}.work{margin-bottom:30px}}
 @media (max-width:520px){.wall{columns:2}.label{flex-direction:column;gap:6px}.framed{padding:6px}}
 @media (prefers-reduced-motion:reduce){.hang,.work:hover .hang{transition:none;transform:none}}
+.d-media{position:relative}.d-swap{position:absolute;left:10px;bottom:10px;font:600 12px/1 system-ui,sans-serif;letter-spacing:.04em;padding:8px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.5);background:rgba(20,20,20,.72);color:#fff;cursor:pointer}
 </style>
 </head>
 <body>
@@ -103,7 +104,7 @@ dialog::backdrop{background:rgba(8,10,22,.7)}
 
 <dialog id="detail" aria-labelledby="dTitle">
   <div class="d-grid">
-    <div class="d-media"><img id="dImg" alt=""></div>
+    <div class="d-media"><img id="dImg" alt=""><button type="button" class="d-swap" id="dSwap" hidden>See original photo</button></div>
     <div class="d-info">
       <p class="d-kind" id="dKind"></p>
       <h2 id="dTitle"></h2>
@@ -145,8 +146,9 @@ dialog::backdrop{background:rgba(8,10,22,.7)}
   const wall = $("wall");
   wall.innerHTML = shown.map((w, i) => {
     const st = STATUS[w.status], tilt = ((i * 37 % 7) - 3) * .35;
+    const pic = w.pole || w;   /* clean flat-lay when one exists; real photo is one tap away in the details */
     const art = w.cutout
-      ? `<span class="object ${w.kind}"><img src="${esc(w.image)}" alt="${esc(w.title)}" width="${w.w}" height="${w.h}" loading="lazy"></span>`
+      ? `<span class="object ${w.kind}"><img src="${esc(pic.image)}" alt="${esc(w.title)}" width="${pic.w}" height="${pic.h}" loading="lazy"></span>`
       : `<span class="framed"><img src="${esc(w.image)}" alt="${esc(w.title)}" width="${w.w}" height="${w.h}" loading="lazy"></span>`;
     return `<button class="work" type="button" data-id="${esc(w.id)}" data-status="${st.key}" data-kind="${w.kind}" aria-label="${esc(w.title)}, ${esc(st.label)}. Open details.">
       <span class="nail" aria-hidden="true"></span><span class="hang" style="--tilt:${tilt.toFixed(2)}deg">${art}</span>
@@ -169,7 +171,10 @@ dialog::backdrop{background:rgba(8,10,22,.7)}
   wall.addEventListener("click", e => {
     const b = e.target.closest(".work"); if (!b) return;
     const w = byId.get(b.dataset.id), st = STATUS[w.status];
-    $("dImg").src = w.image; $("dImg").alt = w.title;
+    const dImg = $("dImg"), swap = $("dSwap"); let showReal = !w.pole;
+    const setPic = () => { dImg.src = showReal ? w.image : w.pole.image; swap.textContent = showReal ? "See clean view" : "See original photo"; };
+    dImg.alt = w.title; swap.hidden = !w.pole; setPic();
+    swap.onclick = () => { showReal = !showReal; setPic(); };
     $("dKind").textContent = w.type + " · " + w.id; $("dTitle").textContent = w.title;
     $("dStatus").textContent = w.status === "Available" ? "For sale · " + price(w.price) : st.label;
     $("dMedium").textContent = w.medium || "TBD"; $("dSize").textContent = w.size || "TBD"; $("dYear").textContent = w.year || "TBD";
