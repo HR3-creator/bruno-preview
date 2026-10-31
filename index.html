@@ -314,6 +314,24 @@ const CONFIG = {
       const cv = row.querySelector("canvas");
       if (cv) isHat ? drawHat(cv, s) : drawPainting(cv, s, it.ratio);
       registry.set(it.id, { it, kind: isHat ? "Hat" : "Painting", cv, img: row.querySelector("img") });
+      /* Hook fit: find the first solid pixel of the hat directly under the wire and lift the hat so it touches the hook. */
+      const hatImg = isHat && row.querySelector(".cut img");
+      if (hatImg) {
+        const fit = () => {
+          try {
+            const W = hatImg.naturalWidth, H = hatImg.naturalHeight, pc = row.querySelector(".piece");
+            if (!W || !H || !pc.clientWidth) return;
+            const col = Math.round(W * Math.max(0, (pc.clientWidth / 2 - 7) / pc.clientWidth));
+            const c = document.createElement("canvas"); c.width = 9; c.height = H;
+            const x = c.getContext("2d", { willReadFrequently: true }); x.drawImage(hatImg, col - 4, 0, 9, H, 0, 0, 9, H);
+            const d = x.getImageData(0, 0, 9, H).data; let top = 0;
+            outer: for (let y = 0; y < H; y++) for (let i = 0; i < 9; i++) if (d[(y * 9 + i) * 4 + 3] > 140) { top = y; break outer; }
+            const f = Math.min(top / H, 0.3);
+            row.querySelector(".cut").style.marginTop = `${(-f / ar * 100).toFixed(2)}%`;
+          } catch (e) { /* canvas unavailable: leave hat as is */ }
+        };
+        hatImg.complete ? fit() : hatImg.addEventListener("load", fit, { once: true });
+      }
     });
   });
   /* Sign to the gallery: everything not for sale lives on the wall */
