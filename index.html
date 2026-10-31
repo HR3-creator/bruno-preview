@@ -30,6 +30,9 @@ button{font:inherit;color:inherit}
 .sky{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:#0B1026}
 .ph{position:absolute;left:0;right:0;top:0;height:116vh;background-size:cover;background-position:42% 100%;will-change:transform,opacity}
 .ph.gold,.ph.night{opacity:0}
+/* Fine film grain over the sky: reads as photographic and hides any leftover softness. */
+.sky::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.14;mix-blend-mode:soft-light;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 .9 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>")}
 
 /* Scene */
 .scene{position:relative;z-index:1;overflow-x:clip;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
@@ -183,11 +186,12 @@ dialog::backdrop{background:rgba(8,10,22,.64)}
 const CONFIG = {
   assets: {
     signal:   "img/signal.webp",
-    skyDay:   "img/sky-day.webp",
-    skyGold:  "img/sky-gold.webp",
-    skyNight: "img/sky-night.webp",
+    /* Backgrounds ship in three sizes: big (retina desktop), mid (1x desktop), tall (portrait phones). */
+    skyDay:   { big: "img/sky-day-2688.webp",   mid: "img/sky-day-1920.webp",   tall: "img/sky-day-m.webp" },
+    skyGold:  { big: "img/sky-gold-2688.webp",  mid: "img/sky-gold-1920.webp",  tall: "img/sky-gold-m.webp" },
+    skyNight: { big: "img/sky-night-2688.webp", mid: "img/sky-night-1920.webp", tall: "img/sky-night-m.webp" },
     pole:     "img/pole.webp",
-    concrete: "img/concrete.webp"
+    concrete: { big: "img/concrete-2688.webp",  mid: "img/concrete-1920.webp",  tall: "img/concrete-m.webp" }
   },
   artist: {
     first: "Bruno", last: "Saquicela",
@@ -217,11 +221,17 @@ const CONFIG = {
 
   /* Scene assets + text */
   $("signalImg").src = A.signal;
-  $("phDay").style.backgroundImage = cssUrl(A.skyDay);
-  $("phGold").style.backgroundImage = cssUrl(A.skyGold);
-  $("phNight").style.backgroundImage = cssUrl(A.skyNight);
+  const portraitMQ = matchMedia("(max-aspect-ratio: 3/4)");
+  const pickSize = set => typeof set === "string" ? set : (portraitMQ.matches ? set.tall : (window.devicePixelRatio >= 1.5 ? set.big : set.mid));
+  function applyBackgrounds() {
+    $("phDay").style.backgroundImage = cssUrl(pickSize(A.skyDay));
+    $("phGold").style.backgroundImage = cssUrl(pickSize(A.skyGold));
+    $("phNight").style.backgroundImage = cssUrl(pickSize(A.skyNight));
+    root.style.setProperty("--concrete-tex", cssUrl(pickSize(A.concrete)));
+  }
+  applyBackgrounds();
+  (portraitMQ.addEventListener ? portraitMQ.addEventListener("change", applyBackgrounds) : portraitMQ.addListener(applyBackgrounds));
   root.style.setProperty("--pole-tex", cssUrl(A.pole));
-  root.style.setProperty("--concrete-tex", cssUrl(A.concrete));
   $("firstName").textContent = CONFIG.artist.first;
   $("lastName").textContent = CONFIG.artist.last;
   $("tagline").textContent = CONFIG.artist.tagline;
