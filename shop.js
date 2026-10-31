@@ -67,6 +67,7 @@
   .shop-btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:50px;border:2px solid #16181B;border-radius:8px;background:#16181B;color:#F4EFE2;
     font:800 15px/1 "Overpass",sans-serif;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;cursor:pointer}
   .shop-btn.ghost{margin-top:8px;background:transparent;color:#16181B}
+  .shop-btn.clear{background:transparent;color:#16181B}
   .shop-btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
   @media (prefers-reduced-motion:reduce){.shop-drawer,.shop-scrim{transition:none}.shop-fab.bump{animation:none}}`;
   const st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
@@ -107,7 +108,7 @@
       : `<li class="shop-empty">Your cart is empty.<br>Every piece is one of a kind.</li>`;
     foot.innerHTML = `<div class="shop-row"><span>Subtotal</span><span>${unpriced && !subtotal ? "TBD" : money(subtotal) + (unpriced ? " + TBD" : "")}</span></div>
       <p class="shop-note">${unpriced ? `${unpriced} piece${unpriced === 1 ? " is" : "s are"} not priced yet. Bruno confirms the price before you pay. ` : ""}Shipping is calculated at checkout.</p>
-      <a class="shop-btn" href="checkout.html" ${items.length ? "" : 'aria-disabled="true" tabindex="-1"'}>Checkout</a>
+      <a class="shop-btn clear" href="checkout.html" ${items.length ? "" : 'aria-disabled="true" tabindex="-1"'}>Checkout</a>
       <button class="shop-btn ghost" type="button" data-close>Keep browsing</button>`;
     foot.querySelector("[data-close]").addEventListener("click", closeDrawer);
   }
