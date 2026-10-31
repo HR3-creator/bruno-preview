@@ -21,7 +21,8 @@ window.WORKS = [
   "image": "img/h01.webp",
   "w": 641,
   "h": 720,
-  "cutout": true
+  "cutout": true,
+  "pole": {"image": "img/h-01-flat.webp", "w": 593, "h": 720}
  },
  {
   "id": "H-02",
@@ -66,7 +67,8 @@ window.WORKS = [
   "image": "img/h-11.webp",
   "w": 720,
   "h": 576,
-  "cutout": true
+  "cutout": true,
+  "pole": {"image": "img/h-11-flat.webp", "w": 638, "h": 720}
  },
  {
   "id": "H-12",
