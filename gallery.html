@@ -121,8 +121,8 @@ dialog::backdrop{background:rgba(8,10,22,.7)}
   </div>
 </dialog>
 
-<script src="data.js?v=10311657"></script>
-<script src="shop.js?v=10311657"></script>
+<script src="data.js?v=10311921"></script>
+<script src="shop.js?v=10311921"></script>
 <script>
 (() => {
   const $ = id => document.getElementById(id);
@@ -178,9 +178,9 @@ dialog::backdrop{background:rgba(8,10,22,.7)}
   wall.addEventListener("click", e => {
     const b = e.target.closest(".work"); if (!b) return;
     const w = byId.get(b.dataset.id), st = STATUS[w.status];
-    const dImg = $("dImg"), swap = $("dSwap"); let showReal = !w.pole;
-    const setPic = () => { dImg.src = showReal ? w.image : w.pole.image; swap.textContent = showReal ? "See clean view" : "See original photo"; };
-    dImg.alt = w.title; swap.hidden = !w.pole; setPic();
+    const dImg = $("dImg"), swap = $("dSwap"), cleanSrc = (w.pole || w).image, realSrc = (w.original || w).image; let showReal = false;
+    const setPic = () => { dImg.src = showReal ? realSrc : cleanSrc; swap.textContent = showReal ? "See clean view" : "See original photo"; };
+    dImg.alt = w.title; swap.hidden = cleanSrc === realSrc; setPic();
     swap.onclick = () => { showReal = !showReal; setPic(); };
     $("dKind").textContent = w.type + " · " + w.id; $("dTitle").textContent = w.title;
     $("dStatus").textContent = w.status === "Available" ? "For sale · " + price(w.price) : st.label;

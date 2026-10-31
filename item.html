@@ -79,8 +79,8 @@ dd{margin:0}
   </section>
   <section class="more" id="more" aria-label="More pieces" hidden><h2>More on the pole</h2><div class="strip" id="strip"></div></section>
 </main>
-<script src="data.js?v=10311657"></script>
-<script src="shop.js?v=10311657"></script>
+<script src="data.js?v=10311921"></script>
+<script src="shop.js?v=10311921"></script>
 <script>
 (() => {
   const $ = id => document.getElementById(id), S = window.Shop, esc = S.esc;
@@ -107,12 +107,12 @@ dd{margin:0}
   /* Images: clean flat-lay when one exists, real photo one tap away */
   const pic = $("pic"), stage = $("stage");
   const show = clean => {
-    const src = clean && w.pole ? w.pole.image : w.image;
-    pic.src = src; pic.alt = w.title + (clean && w.pole ? " (clean view)" : "");
-    stage.classList.toggle("photo", !w.cutout);
+    const cleanSrc = (w.pole || w).image, realSrc = (w.original || w).image;
+    pic.src = clean ? cleanSrc : realSrc; pic.alt = w.title + (clean ? "" : " (original photo)");
+    stage.classList.toggle("photo", !clean || !w.cutout);
     $("vClean").setAttribute("aria-pressed", String(clean)); $("vReal").setAttribute("aria-pressed", String(!clean));
   };
-  if (w.pole) { $("toggle").hidden = false; $("vClean").onclick = () => show(true); $("vReal").onclick = () => show(false); }
+  if ((w.pole || w).image !== (w.original || w).image) { $("toggle").hidden = false; $("vClean").onclick = () => show(true); $("vReal").onclick = () => show(false); }
   show(true);
 
   /* Actions */

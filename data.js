@@ -22,6 +22,7 @@ window.WORKS = [
   "w": 641,
   "h": 720,
   "cutout": true,
+  "original": {"image": "img/orig/h-01.webp", "w": 1200, "h": 1600},
   "pole": {"image": "img/h-01-flat.webp", "w": 593, "h": 720}
  },
  {
@@ -53,7 +54,8 @@ window.WORKS = [
   "image": "img/h-08.webp",
   "w": 641,
   "h": 720,
-  "cutout": true
+  "cutout": true,
+  "original": {"image": "img/orig/h-08.webp", "w": 1200, "h": 1600}
  },
  {
   "id": "H-11",
@@ -69,6 +71,7 @@ window.WORKS = [
   "w": 720,
   "h": 576,
   "cutout": true,
+  "original": {"image": "img/orig/h-11.webp", "w": 1200, "h": 1600},
   "pole": {"image": "img/h-11-flat.webp", "w": 638, "h": 720}
  },
  {
@@ -84,7 +87,8 @@ window.WORKS = [
   "image": "img/h-12.webp",
   "w": 720,
   "h": 614,
-  "cutout": true
+  "cutout": true,
+  "original": {"image": "img/orig/h-12.webp", "w": 1200, "h": 1600}
  },
  {
   "id": "H-14",
@@ -99,7 +103,8 @@ window.WORKS = [
   "image": "img/h-14.webp",
   "w": 709,
   "h": 720,
-  "cutout": true
+  "cutout": true,
+  "original": {"image": "img/orig/h-14.webp", "w": 1200, "h": 1600}
  },
  {
   "id": "H-15",
@@ -115,6 +120,7 @@ window.WORKS = [
   "w": 591,
   "h": 389,
   "cutout": true,
+  "original": {"image": "img/orig/h-15.webp", "w": 1200, "h": 1600},
   "pole": {"image": "img/h-15-flat.webp", "w": 720, "h": 714}
  },
  {
@@ -131,6 +137,7 @@ window.WORKS = [
   "w": 520,
   "h": 528,
   "cutout": true,
+  "original": {"image": "img/orig/h-16.webp", "w": 1200, "h": 1600},
   "pole": {"image": "img/h-16-flat.webp", "w": 650, "h": 720}
  },
  {
@@ -162,6 +169,7 @@ window.WORKS = [
   "w": 720,
   "h": 602,
   "cutout": true,
+  "original": {"image": "img/orig/h-19.webp", "w": 1200, "h": 1600},
   "pole": {"image": "img/h-19-flat.webp", "w": 718, "h": 720}
  },
  {
@@ -177,7 +185,8 @@ window.WORKS = [
   "image": "img/h-21.webp",
   "w": 720,
   "h": 712,
-  "cutout": true
+  "cutout": true,
+  "original": {"image": "img/orig/h-21.webp", "w": 1200, "h": 1600}
  },
  {
   "id": "H-20",
@@ -193,6 +202,7 @@ window.WORKS = [
   "w": 720,
   "h": 571,
   "cutout": true,
+  "original": {"image": "img/orig/h-20.webp", "w": 1200, "h": 1600},
   "pole": {"image": "img/h-20-flat.webp", "w": 701, "h": 720}
  },
  {
@@ -209,6 +219,7 @@ window.WORKS = [
   "w": 709,
   "h": 720,
   "cutout": true,
+  "original": {"image": "img/orig/h-22.webp", "w": 1200, "h": 1600},
   "pole": {"image": "img/h-22-flat.webp", "w": 651, "h": 720}
  },
  {
@@ -225,6 +236,7 @@ window.WORKS = [
   "w": 471,
   "h": 477,
   "cutout": true,
+  "original": {"image": "img/orig/h-23.webp", "w": 1600, "h": 1200},
   "pole": {"image": "img/h-23-flat.webp", "w": 654, "h": 720}
  },
  {
@@ -241,6 +253,7 @@ window.WORKS = [
   "w": 497,
   "h": 655,
   "cutout": true,
+  "original": {"image": "img/orig/h-24.webp", "w": 1200, "h": 1600},
   "pole": {"image": "img/h-24-flat.webp", "w": 527, "h": 720}
  },
  {
@@ -257,6 +270,7 @@ window.WORKS = [
   "w": 631,
   "h": 720,
   "cutout": true,
+  "original": {"image": "img/orig/h-13.webp", "w": 1200, "h": 1600},
   "pole": {"image": "img/h-13-flat.webp", "w": 571, "h": 720}
  },
  {
@@ -273,6 +287,7 @@ window.WORKS = [
   "w": 720,
   "h": 624,
   "cutout": true,
+  "original": {"image": "img/orig/h-25.webp", "w": 1200, "h": 1600},
   "pole": {"image": "img/h-25-flat.webp", "w": 660, "h": 720}
  },
  {
@@ -289,6 +304,7 @@ window.WORKS = [
   "w": 706,
   "h": 638,
   "cutout": true,
+  "original": {"image": "img/orig/h-18.webp", "w": 1200, "h": 1600},
   "pole": {"image": "img/h-18-flat.webp", "w": 643, "h": 720}
  },
  {
@@ -305,6 +321,7 @@ window.WORKS = [
   "w": 639,
   "h": 720,
   "cutout": true,
+  "original": {"image": "img/orig/h-26.webp", "w": 1200, "h": 1600},
   "pole": {"image": "img/h-26-flat.webp", "w": 658, "h": 720}
  },
  {
