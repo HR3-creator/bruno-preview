@@ -97,7 +97,7 @@ dd{margin:0}
   $("title").textContent = w.title;
   $("price").textContent = forSale ? S.money(w.price) : "";
   $("price").hidden = !forSale;
-  const label = { Available: "For sale", Sold: "Sold" + (w.year ? " " + w.year : ""), "Not for sale": "Not for sale", "Private collection": "Private collection", Undecided: "Status TBD" }[w.status] || w.status;
+  const label = { Available: "For sale", Sold: "Sold" + (w.year ? " " + w.year : ""), "Not for sale": "Not for sale", "Private collection": "Private collection", Undecided: "On Display" }[w.status] || w.status;
   $("badge").textContent = label; $("badge").classList.toggle("off", !forSale);
   $("lede").textContent = isHat
     ? "A hand-embellished beanie by Bruno Saquicela. Every stud, bead, patch and charm is placed by hand, so no two hats are alike."

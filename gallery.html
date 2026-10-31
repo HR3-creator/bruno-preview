@@ -135,11 +135,11 @@ dialog::backdrop{background:rgba(8,10,22,.7)}
     "Sold":               { key: "sold",      stamp: w => "Sold" + (w.year ? " " + w.year : ""), label: "Sold" },
     "Not for sale":       { key: "nfs",       stamp: () => "Not for sale", label: "Not for sale" },
     "Private collection": { key: "private",   stamp: () => "Private collection", label: "Private collection" },
-    "Undecided":          { key: "tbd",       stamp: () => "Status TBD", label: "Status TBD" }
+    "Undecided":          { key: "tbd",       stamp: () => "On Display", label: "On Display" }
   };
   const shown = (window.WORKS || []).filter(w => STATUS[w.status] && (w.status !== "Undecided" || window.SHOW_UNDECIDED));
 
-  const fStatus = [["all","All"],["available","For sale"],["sold","Sold"],["nfs","Not for sale"],["private","Private collection"],["tbd","Status TBD"]]
+  const fStatus = [["all","All"],["available","For sale"],["sold","Sold"],["nfs","Not for sale"],["private","Private collection"],["tbd","On Display"]]
     .filter(([k]) => k === "all" || shown.some(w => STATUS[w.status].key === k));
   const fType = [["all","Everything"],["art","Paintings & collage"],["hat","Hats"]].filter(([k]) => k === "all" || shown.some(w => w.kind === k));
   let state = { status: "all", type: "all" };
