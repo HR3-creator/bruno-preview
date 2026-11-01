@@ -6,6 +6,8 @@
            SHOW_UNDECIDED to false before launch. Anything else is hidden.
    title is a working description until Bruno names the piece.
    ===================================================================== */
+/* Contact shown in the site footer and used to send orders. Fill these in and the footer + "send order" step turn on. */
+window.CONTACT = { email: "", instagram: "" };
 window.SHOW_UNDECIDED = true;
 window.WORKS = [
  {

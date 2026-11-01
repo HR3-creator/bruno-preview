@@ -123,5 +123,23 @@
     setTimeout(() => { if (!drawer.classList.contains("on")) drawer.hidden = true; }, 320);
     if (lastFocus && lastFocus.focus) lastFocus.focus();
   }
-  document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", build) : build();
+  /* Contact footer: appears on every page once CONTACT.email or CONTACT.instagram is filled in data.js */
+  function footer() {
+    const C = window.CONTACT || {}; if (!C.email && !C.instagram) return;
+    const ig = (C.instagram || "").replace(/^@/, "");
+    const f = document.createElement("footer"); f.className = "site-foot";
+    f.innerHTML = `<p class="sf-t">Questions, commissions or a meet-up?</p><p class="sf-l">`
+      + (C.email ? `<a href="mailto:${esc(C.email)}">${esc(C.email)}</a>` : "")
+      + (C.email && ig ? `<span aria-hidden="true">·</span>` : "")
+      + (ig ? `<a href="https://instagram.com/${encodeURIComponent(ig)}" target="_blank" rel="noopener">@${esc(ig)}</a>` : "") + `</p>`;
+    document.body.appendChild(f);
+  }
+  const fcss = document.createElement("style");
+  fcss.textContent = `.site-foot{position:relative;z-index:5;padding:28px 16px calc(30px + env(safe-area-inset-bottom,0px));text-align:center;background:#16181B;color:#EFEADF;font-family:"Overpass",system-ui,sans-serif}
+  .site-foot .sf-t{margin:0 0 10px;font:700 12px/1.3 "Overpass Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:#B8B2A6}
+  .site-foot .sf-l{margin:0;display:flex;flex-wrap:wrap;justify-content:center;gap:10px 16px;font:800 17px/1.3 "Overpass",sans-serif}
+  .site-foot a{color:#F4EFE4;text-decoration:none;border-bottom:2px solid #FF7A1F;padding-bottom:2px;word-break:break-all}`;
+  document.head.appendChild(fcss);
+  const boot = () => { build(); footer(); };
+  document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", boot) : boot();
 })();

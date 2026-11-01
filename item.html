@@ -28,7 +28,7 @@ main>*{min-width:0}
 .stage{position:relative;min-height:320px;display:grid;place-items:center;padding:28px 12px 22px}
 .stage img{display:block;max-width:min(100%,520px);max-height:62vh;object-fit:contain;filter:drop-shadow(0 26px 30px rgba(0,0,0,.55))}
 .stage.photo img{border-radius:6px;max-height:66vh}
-.toggle{display:flex;justify-content:center;gap:6px;margin-top:6px}
+.toggle{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:6px}
 .toggle button{min-height:40px;padding:0 14px;border:2px solid #F2EFE6;border-radius:20px;background:transparent;color:#F2EFE6;font:700 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
 .toggle button[aria-pressed="true"]{background:#F2EFE6;color:var(--ink)}
 .card{background:var(--enamel);border-radius:10px;padding:24px 22px;box-shadow:0 24px 50px rgba(0,0,0,.4)}
@@ -79,8 +79,8 @@ dd{margin:0}
   </section>
   <section class="more" id="more" aria-label="More pieces" hidden><h2>More on the pole</h2><div class="strip" id="strip"></div></section>
 </main>
-<script src="data.js?v=10312224"></script>
-<script src="shop.js?v=10312224"></script>
+<script src="data.js?v=11010128"></script>
+<script src="shop.js?v=11010128"></script>
 <script>
 (() => {
   const $ = id => document.getElementById(id), S = window.Shop, esc = S.esc;
@@ -104,16 +104,27 @@ dd{margin:0}
     : "An original work by Bruno Saquicela, built from paint, found objects and natural materials.";
   $("medium").textContent = w.medium || "TBD"; $("mediumL").hidden = $("medium").hidden = isHat; $("size").textContent = w.size || "TBD"; $("year").textContent = w.year || "TBD";
 
-  /* Images: clean flat-lay when one exists, real photo one tap away */
+  /* Images: clean view first, then the original photo, then any extra photos (front/back) listed in w.photos */
   const pic = $("pic"), stage = $("stage");
-  const show = clean => {
-    const cleanSrc = (w.pole || w).image, realSrc = (w.original || w).image;
-    pic.src = clean ? cleanSrc : realSrc; pic.alt = w.title + (clean ? "" : " (original photo)");
-    stage.classList.toggle("photo", !clean || !w.cutout);
-    $("vClean").setAttribute("aria-pressed", String(clean)); $("vReal").setAttribute("aria-pressed", String(!clean));
+  const views = [{ src: (w.pole || w).image, label: "Clean view", clean: true }];
+  if ((w.original || w).image !== views[0].src) views.push({ src: (w.original || w).image, label: "Original photo" });
+  (w.photos || []).forEach((p, i) => { const src = typeof p === "string" ? p : p.image; if (src && !views.some(v => v.src === src)) views.push({ src, label: (p && p.label) || "Photo " + (i + 1) }); });
+  if (views.length === 1) views[0].clean = !!w.cutout;
+  const tg = $("toggle");
+  const show = n => {
+    const v = views[n]; pic.src = v.src; pic.alt = w.title + (n ? " (" + v.label.toLowerCase() + ")" : "");
+    stage.classList.toggle("photo", !(v.clean && w.cutout));
+    tg.querySelectorAll("button").forEach((b, i) => b.setAttribute("aria-pressed", String(i === n)));
   };
-  if ((w.pole || w).image !== (w.original || w).image) { $("toggle").hidden = false; $("vClean").onclick = () => show(true); $("vReal").onclick = () => show(false); }
-  show(true);
+  if (views.length > 1) {
+    tg.hidden = false;
+    tg.innerHTML = views.map((v, i) => `<button type="button" aria-pressed="${i === 0}">${esc(v.label)}</button>`).join("");
+    tg.querySelectorAll("button").forEach((b, i) => b.onclick = () => show(i));
+    let x0 = null; stage.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; }, { passive: true });
+    stage.addEventListener("touchend", e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; x0 = null;
+      if (Math.abs(dx) > 50) { const cur = [...tg.querySelectorAll("button")].findIndex(b => b.getAttribute("aria-pressed") === "true"); show((cur + (dx < 0 ? 1 : views.length - 1)) % views.length); } });
+  }
+  show(0);
 
   /* Actions */
   const actions = $("actions"), msg = $("msg");

@@ -71,7 +71,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--ink);outline:none}
 </style>
 <body data-no-fab>
 <nav class="top" aria-label="Site"><a class="crumb" href="index.html">&larr; Keep shopping</a></nav>
-<p class="preview">PREVIEW CHECKOUT · No payment is taken and nothing is sent. Card payment connects at launch.</p>
+<p class="preview" id="previewNote">PREVIEW CHECKOUT · No payment is taken and nothing is sent. Card payment connects at launch.</p>
 <main id="main">
   <h1 id="h1">Checkout</h1>
 
@@ -90,7 +90,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--ink);outline:none}
       <legend>Delivery</legend>
       <div class="opts">
         <label class="opt"><input type="radio" name="ship" value="ship" checked><span>Ship to me<small>Packed by Bruno, tracked. Cost confirmed before payment.</small></span><span class="amt">TBD</span></label>
-        <label class="opt"><input type="radio" name="ship" value="pickup"><span>Pick up in Queens, NY<small>Bruno emails you to set a time.</small></span><span class="amt">Free</span></label>
+        <label class="opt"><input type="radio" name="ship" value="pickup"><span>Meet up in Queens, NY<small>Bruno reaches out after your order to set a time and a public spot.</small></span><span class="amt">Free</span></label>
       </div>
     </fieldset>
     <fieldset id="addr">
@@ -130,15 +130,18 @@ input:focus,select:focus,textarea:focus{border-color:var(--ink);outline:none}
     <span class="ref" id="ref"></span>
     <p id="doneTxt" style="margin:0 0 18px;line-height:1.55"></p>
     <ul class="lines" id="doneLines" style="text-align:left;margin-bottom:18px"></ul>
-    <a class="btn" href="index.html">Back to the pole</a>
-    <p class="fine">Preview build: no payment was taken and no message was sent.</p>
+    <a class="btn" id="sendOrder" href="#" hidden>Send this order to Bruno</a>
+    <a class="btn ghost" href="index.html">Back to the pole</a>
+    <p class="fine" id="doneFine">Preview build: no payment was taken and no message was sent.</p>
   </div></section>
 </main>
-<script src="data.js?v=10312224"></script>
-<script src="shop.js?v=10312224"></script>
+<script src="data.js?v=11010128"></script>
+<script src="shop.js?v=11010128"></script>
 <script>
 (() => {
   const $ = id => document.getElementById(id), S = window.Shop, esc = S.esc;
+  const C0 = window.CONTACT || {};
+  if (C0.email) $("previewNote").textContent = "Orders go to Bruno by email. He confirms your piece and sends payment details. Nothing is charged on this site.";
   const form = $("form"), shipRadios = form.querySelectorAll('input[name="ship"]');
   const ship = () => form.querySelector('input[name="ship"]:checked').value;
   const lineHtml = (w, removable) => { const p = S.pic(w); return `<li class="line"><a class="th" href="item.html?id=${encodeURIComponent(w.id)}"><img src="${esc(p.image)}" alt=""></a>
@@ -153,7 +156,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--ink);outline:none}
     const sub = unpriced && !subtotal ? "TBD" : S.money(subtotal) + (unpriced ? " + TBD" : "");
     const shipTxt = ship() === "pickup" ? "Free" : "TBD";
     const total = unpriced || ship() === "ship" ? (subtotal ? S.money(subtotal) + " + TBD" : "TBD") : S.money(subtotal);
-    $("tot").innerHTML = `<dt>Items (${items.length})</dt><dd>${sub}</dd><dt>${ship() === "pickup" ? "Pickup" : "Shipping"}</dt><dd>${shipTxt}</dd>
+    $("tot").innerHTML = `<dt>Items (${items.length})</dt><dd>${sub}</dd><dt>${ship() === "pickup" ? "Meet-up" : "Shipping"}</dt><dd>${shipTxt}</dd>
       <dt class="grand">Total</dt><dd class="grand">${total}</dd>`;
   }
   $("lines").addEventListener("click", e => { const r = e.target.closest(".rm"); if (r) S.remove(r.dataset.id); });
@@ -182,8 +185,18 @@ input:focus,select:focus,textarea:focus{border-color:var(--ink);outline:none}
     const ref = "BS-" + Date.now().toString(36).toUpperCase().slice(-6);
     $("ref").textContent = ref;
     $("thanks").textContent = "Thank you, " + $("name").value.trim().split(/\s+/)[0];
-    $("doneTxt").textContent = `Bruno will email ${$("email").value.trim()} to confirm ${items.some(w => typeof w.price !== "number") ? "pricing, " : ""}${ship() === "pickup" ? "a pickup time in Queens" : "shipping"} and payment.`;
+    $("doneTxt").textContent = `Bruno will email ${$("email").value.trim()} to confirm ${items.some(w => typeof w.price !== "number") ? "pricing, " : ""}${ship() === "pickup" ? "a meet-up time and place in Queens" : "shipping"} and payment.`;
     $("doneLines").innerHTML = items.map(w => lineHtml(w, false)).join("");
+    const C = window.CONTACT || {};
+    if (C.email) {
+      const total = items.reduce((a, w) => a + (typeof w.price === "number" ? w.price : 0), 0);
+      const lines = items.map(w => `- ${w.id} ${w.title}: ${S.money(w.price)}`).join("\n");
+      const where = ship() === "pickup" ? "Meet up in Queens" : `Ship to: ${$("a1").value.trim()} ${$("a2").value.trim()}, ${$("city").value.trim()}, ${$("state").value.trim()} ${$("zip").value.trim()}`;
+      const body = `New order ${ref}\n\n${lines}\nItems total: ${S.money(total)}\n\nName: ${$("name").value.trim()}\nEmail: ${$("email").value.trim()}\nPhone: ${$("phone").value.trim() || "-"}\n${where}\nNote: ${$("note").value.trim() || "-"}`;
+      const a = $("sendOrder"); a.hidden = false;
+      a.href = `mailto:${encodeURIComponent(C.email)}?subject=${encodeURIComponent("Order " + ref + " - Bruno Saquicela")}&body=${encodeURIComponent(body)}`;
+      $("doneFine").textContent = "Tap \"Send this order to Bruno\" so he gets your order. He replies with payment details. Nothing was charged on this site.";
+    }
     S.clear();
     $("done").hidden = false; $("empty").hidden = true; $("h1").textContent = "Order placed";
     scrollTo({ top: 0, behavior: "smooth" });
