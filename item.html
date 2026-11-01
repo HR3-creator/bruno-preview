@@ -72,15 +72,15 @@ dd{margin:0}
     <p class="price" id="price"></p>
     <span class="badge" id="badge"></span>
     <p class="lede" id="lede"></p>
-    <dl><dt>Medium</dt><dd id="medium"></dd><dt>Size</dt><dd id="size"></dd><dt>Year</dt><dd id="year"></dd><dt>Edition</dt><dd>One of one, handmade in Queens, NY</dd></dl>
+    <dl><dt id="mediumL">Medium</dt><dd id="medium"></dd><dt>Size</dt><dd id="size"></dd><dt>Year</dt><dd id="year"></dd><dt>Edition</dt><dd>One of one, handmade in Queens, NY</dd></dl>
     <div class="actions" id="actions"></div>
     <p class="msg" id="msg" role="status"></p>
     <p class="fine" id="fine"></p>
   </section>
   <section class="more" id="more" aria-label="More pieces" hidden><h2>More on the pole</h2><div class="strip" id="strip"></div></section>
 </main>
-<script src="data.js?v=10311921"></script>
-<script src="shop.js?v=10311921"></script>
+<script src="data.js?v=10312224"></script>
+<script src="shop.js?v=10312224"></script>
 <script>
 (() => {
   const $ = id => document.getElementById(id), S = window.Shop, esc = S.esc;
@@ -102,7 +102,7 @@ dd{margin:0}
   $("lede").textContent = isHat
     ? "A hand-embellished beanie by Bruno Saquicela. Every stud, bead, patch and charm is placed by hand, so no two hats are alike."
     : "An original work by Bruno Saquicela, built from paint, found objects and natural materials.";
-  $("medium").textContent = w.medium || "TBD"; $("size").textContent = w.size || "TBD"; $("year").textContent = w.year || "TBD";
+  $("medium").textContent = w.medium || "TBD"; $("mediumL").hidden = $("medium").hidden = isHat; $("size").textContent = w.size || "TBD"; $("year").textContent = w.year || "TBD";
 
   /* Images: clean flat-lay when one exists, real photo one tap away */
   const pic = $("pic"), stage = $("stage");

@@ -114,15 +114,15 @@ dialog::backdrop{background:rgba(8,10,22,.7)}
     <div class="d-info">
       <p class="d-kind" id="dKind"></p>
       <h2 id="dTitle"></h2>
-      <dl><dt>Status</dt><dd id="dStatus"></dd><dt>Medium</dt><dd id="dMedium"></dd><dt>Size</dt><dd id="dSize"></dd><dt>Year</dt><dd id="dYear"></dd></dl>
+      <dl><dt>Status</dt><dd id="dStatus"></dd><dt id="dMediumL">Medium</dt><dd id="dMedium"></dd><dt>Size</dt><dd id="dSize"></dd><dt>Year</dt><dd id="dYear"></dd></dl>
       <div class="d-actions" id="dActions"></div>
       <p class="d-msg" id="dMsg" role="status"></p>
     </div>
   </div>
 </dialog>
 
-<script src="data.js?v=10311921"></script>
-<script src="shop.js?v=10311921"></script>
+<script src="data.js?v=10312224"></script>
+<script src="shop.js?v=10312224"></script>
 <script>
 (() => {
   const $ = id => document.getElementById(id);
@@ -184,7 +184,7 @@ dialog::backdrop{background:rgba(8,10,22,.7)}
     swap.onclick = () => { showReal = !showReal; setPic(); };
     $("dKind").textContent = w.type + " · " + w.id; $("dTitle").textContent = w.title;
     $("dStatus").textContent = w.status === "Available" ? "For sale · " + price(w.price) : st.label;
-    $("dMedium").textContent = w.medium || "TBD"; $("dSize").textContent = w.size || "TBD"; $("dYear").textContent = w.year || "TBD";
+    $("dMedium").textContent = w.medium || "TBD"; $("dMediumL").hidden = $("dMedium").hidden = w.kind === "hat"; $("dSize").textContent = w.size || "TBD"; $("dYear").textContent = w.year || "TBD";
     $("dActions").innerHTML = (w.status === "Available"
       ? `<a class="btn primary" href="item.html?id=${encodeURIComponent(w.id)}">View item</a><button class="btn ghost" type="button" id="dAdd">${window.Shop && window.Shop.has(w.id) ? "In cart" : "Add to cart"}</button>`
       : `<button class="btn primary" type="button" id="dAsk">Ask about a commission</button>`)

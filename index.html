@@ -206,7 +206,7 @@ dialog::backdrop{background:rgba(8,10,22,.64)}
     <div class="d-info">
       <p class="d-kind" id="dKind"></p>
       <h2 id="dTitle"></h2>
-      <dl><dt>Medium</dt><dd id="dMedium"></dd><dt>Size</dt><dd id="dSize"></dd><dt>Price</dt><dd id="dPrice"></dd></dl>
+      <dl><dt id="dMediumL">Medium</dt><dd id="dMedium"></dd><dt>Size</dt><dd id="dSize"></dd><dt>Price</dt><dd id="dPrice"></dd></dl>
       <p class="d-note" id="dNote" hidden></p>
       <div class="d-actions"><button class="btn primary" id="dCart" type="button">Add to cart</button><a class="btn ghost" id="dView" href="#">View item</a><button class="btn ghost" id="dClose" type="button">Close</button></div>
       <p class="d-msg" id="dMsg" role="status"></p>
@@ -214,8 +214,8 @@ dialog::backdrop{background:rgba(8,10,22,.64)}
   </div>
 </dialog>
 
-<script src="data.js?v=10311921"></script>
-<script src="shop.js?v=10311921"></script>
+<script src="data.js?v=10312224"></script>
+<script src="shop.js?v=10312224"></script>
 <script>
 /* =====================================================================
    EDIT HERE. Everything on the page comes from this one object.
@@ -398,7 +398,7 @@ const CONFIG = {
     $("dImg").src = img ? img.src : cv.toDataURL("image/png"); $("dImg").alt = it.title;
     $("dMedia").classList.toggle("light", kind === "Hat");
     $("dKind").textContent = kind + " · " + it.id; $("dTitle").textContent = it.title;
-    $("dMedium").textContent = it.medium || "TBD"; $("dSize").textContent = it.size || "TBD"; $("dPrice").textContent = price(it.price);
+    $("dMedium").textContent = it.medium || "TBD"; $("dMediumL").hidden = $("dMedium").hidden = kind === "Hat"; $("dSize").textContent = it.size || "TBD"; $("dPrice").textContent = price(it.price);
     const note = $("dNote"); note.hidden = !!it.image; note.textContent = "Placeholder artwork. Replace it by adding a photo URL to this item in CONFIG.";
     $("dMsg").textContent = "";
     current = it.id; $("dView").href = "item.html?id=" + encodeURIComponent(it.id); syncCart();
