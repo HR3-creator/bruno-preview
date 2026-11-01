@@ -134,7 +134,7 @@ dialog::backdrop{background:rgba(8,10,22,.7)}
   const STATUS = {
     "Available":          { key: "available", stamp: w => "For sale · " + price(w.price), label: "For sale" },
     "Sold":               { key: "sold",      stamp: w => "Sold" + (w.year ? " " + w.year : ""), label: "Sold" },
-    "Not for sale":       { key: "nfs",       stamp: () => "Not for sale", label: "Not for sale" },
+    "Not for sale":       { key: "tbd",       stamp: () => "On Display", label: "On Display" },
     "Private collection": { key: "private",   stamp: () => "Private collection", label: "Private collection" },
     "Undecided":          { key: "tbd",       stamp: () => "On Display", label: "On Display" }
   };
