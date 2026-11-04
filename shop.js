@@ -26,6 +26,13 @@
       const items = Shop.items(), priced = items.filter(w => typeof w.price === "number");
       return { items, subtotal: priced.reduce((a, w) => a + w.price, 0), unpriced: items.length - priced.length };
     },
+    /* Shipping for the current cart (window.SHIPPING in data.js). Hats: flat up to maxFlat, bulk above. Art: quoted by Bruno.
+       Returns { cost: dollars for hats, hats, art, quoted: true if any non-hat needs a quote }. */
+    shipping() {
+      const R = window.SHIPPING || { flat: 8, bulk: 12, maxFlat: 2 }, items = Shop.items();
+      const hats = items.filter(w => w.kind === "hat").length, art = items.length - hats;
+      return { cost: hats === 0 ? 0 : hats <= R.maxFlat ? R.flat : R.bulk, hats, art, quoted: art > 0 };
+    },
     money, esc, byId,
     pic: w => (w.pole || w),
     onChange: f => { subs.add(f); f(ids()); },
@@ -157,22 +164,31 @@
       setTimeout(() => { side = 1 - side; img.src = srcs[side]; if (onSide) onSide(side); img.classList.remove("turning"); }, 220); };
     img.onclick = go; return { go, get side() { return side; }, set(s) { side = s; img.src = srcs[s]; } };
   };
-  /* Contact footer: appears on every page once CONTACT.email or CONTACT.instagram is filled in data.js */
+  /* Site footer on every page: contact line (email and/or Instagram, whichever is set in data.js) + policy links */
   function footer() {
-    const C = window.CONTACT || {}; if (!C.email && !C.instagram) return;
+    const C = window.CONTACT || {};
     const ig = (C.instagram || "").replace(/^@/, "");
     const f = document.createElement("footer"); f.className = "site-foot";
-    f.innerHTML = `<p class="sf-t">Questions, commissions or a meet-up?</p><p class="sf-l">`
-      + (C.email ? `<a href="mailto:${esc(C.email)}">${esc(C.email)}</a>` : "")
-      + (C.email && ig ? `<span aria-hidden="true">·</span>` : "")
-      + (ig ? `<a href="https://instagram.com/${encodeURIComponent(ig)}" target="_blank" rel="noopener">@${esc(ig)}</a>` : "") + `</p>`;
+    const contact = (C.email || ig)
+      ? `<p class="sf-t">Questions, commissions or a meet-up?</p><p class="sf-l">`
+        + (C.email ? `<a href="mailto:${esc(C.email)}">${esc(C.email)}</a>` : "")
+        + (C.email && ig ? `<span aria-hidden="true">·</span>` : "")
+        + (ig ? `<a href="https://instagram.com/${encodeURIComponent(ig)}" target="_blank" rel="noopener">@${esc(ig)}</a>` : "") + `</p>`
+      : "";
+    f.innerHTML = contact
+      + `<nav class="sf-p" aria-label="Policies"><a href="policies.html#shipping">Shipping</a><a href="policies.html#returns">Returns</a><a href="policies.html#privacy">Privacy</a><a href="policies.html#terms">Terms</a></nav>`
+      + `<p class="sf-c">&copy; 2026 Bruno Saquicela · Queens, NY</p>`;
     document.body.appendChild(f);
   }
   const fcss = document.createElement("style");
   fcss.textContent = `.site-foot{position:relative;z-index:5;padding:28px 16px calc(30px + env(safe-area-inset-bottom,0px));text-align:center;background:#16181B;color:#EFEADF;font-family:"Overpass",system-ui,sans-serif}
   .site-foot .sf-t{margin:0 0 10px;font:700 12px/1.3 "Overpass Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:#B8B2A6}
   .site-foot .sf-l{margin:0;display:flex;flex-wrap:wrap;justify-content:center;gap:10px 16px;font:800 17px/1.3 "Overpass",sans-serif}
-  .site-foot a{color:#F4EFE4;text-decoration:none;border-bottom:2px solid #FF7A1F;padding-bottom:2px;word-break:break-all}`;
+  .site-foot a{color:#F4EFE4;text-decoration:none;border-bottom:2px solid #FF7A1F;padding-bottom:2px;word-break:break-all}
+  .site-foot .sf-p{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 8px;margin:18px 0 0}
+  .site-foot .sf-p a{display:inline-flex;align-items:center;min-height:44px;padding:0 10px;border:0;font:700 12px/1 "Overpass Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:#D9D3C6;word-break:normal}
+  .site-foot .sf-p a:hover{color:#FF7A1F}
+  .site-foot .sf-c{margin:8px 0 0;font:400 11px/1.4 "Overpass Mono",monospace;letter-spacing:.08em;color:#8F8A7F}`;
   document.head.appendChild(fcss);
   const boot = () => { build(); footer(); };
   document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", boot) : boot();

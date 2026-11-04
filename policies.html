@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Shipping, returns and policies · Bruno Saquicela</title>
+<meta name="description" content="Shipping, returns, privacy and terms for Bruno Saquicela's handmade hats and paintings.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;800&family=Overpass+Mono:wght@400;700&display=swap">
+<style>
+/* Policies: one plain, readable page on the same concrete as the rest of the site. */
+:root{--ink:#16181B;--muted:#55595F;--enamel:#F2EFE6;--street:#1C6644;--led:#FF7A1F;--line:#cfc8b8;
+  --f:"Overpass",system-ui,sans-serif;--mono:"Overpass Mono",ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}
+html,body{margin:0;background:#6d6a63;color:var(--ink)}
+html{scroll-behavior:smooth}
+body{font-family:var(--f);-webkit-font-smoothing:antialiased;min-height:100dvh;
+  background:linear-gradient(180deg,rgba(0,0,0,.28),rgba(0,0,0,.42)),url("img/concrete-tile.webp?v=4k") center top / 600px auto repeat,#6d6a63}
+[hidden]{display:none!important}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--led);outline-offset:3px}
+.top{display:flex;gap:10px;flex-wrap:wrap;padding:max(14px,env(safe-area-inset-top,0px)) 16px 0;padding-right:150px}
+.crumb{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:7px;background:var(--street);color:#fff;text-decoration:none;
+  font:800 13px/1 var(--f);letter-spacing:.08em;text-transform:uppercase;box-shadow:inset 0 0 0 2px var(--street),inset 0 0 0 4px #F4F4F0,0 6px 14px rgba(0,0,0,.3)}
+main{max-width:760px;margin:0 auto;padding:24px 16px 72px}
+h1{margin:10px 0 6px;color:#F4EFE2;font:800 clamp(30px,6vw,44px)/1.05 var(--f);letter-spacing:-.01em}
+.sub{margin:0 0 18px;color:#E9E4D8;font:700 12px/1.5 var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.jump{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.jump a{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border:2px solid #F2EFE6;border-radius:20px;color:#F2EFE6;text-decoration:none;font:700 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.jump a:hover{background:#F2EFE6;color:var(--ink)}
+section{background:var(--enamel);border-radius:10px;padding:24px 22px;margin:0 0 18px;box-shadow:0 20px 44px rgba(0,0,0,.35);scroll-margin-top:16px}
+h2{margin:0 0 12px;font:800 26px/1.1 var(--f);letter-spacing:-.01em}
+h3{margin:20px 0 6px;font:800 13px/1.2 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--street)}
+p,li{font-size:16px;line-height:1.6}
+p{margin:0 0 12px}
+ul{margin:0 0 12px;padding-left:20px}
+li{margin:0 0 6px}
+table{width:100%;border-collapse:collapse;margin:6px 0 14px;font-size:15px}
+th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:800 12px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.note{padding:12px 14px;border-left:4px solid var(--led);background:#FBF8F1;font-size:15px}
+.fine{color:var(--muted);font-size:13.5px}
+</style>
+<body>
+<nav class="top" aria-label="Site"><a class="crumb" href="index.html">&larr; The pole</a><a class="crumb" href="gallery.html">Gallery wall</a></nav>
+<main id="main">
+  <h1>Shipping, returns and policies</h1>
+  <p class="sub">Bruno Saquicela · Queens, NY · Last updated November 4, 2026</p>
+  <nav class="jump" aria-label="Policies"><a href="#shipping">Shipping</a><a href="#returns">Returns</a><a href="#privacy">Privacy</a><a href="#terms">Terms</a></nav>
+
+  <section id="shipping">
+    <h2>Shipping</h2>
+    <p>Every piece is handmade and one of one, packed by Bruno in Queens, NY.</p>
+    <h3>Where and how much</h3>
+    <table>
+      <tr><th>Option</th><th>Cost</th></tr>
+      <tr><td>Meet up in Queens, NY</td><td>Free</td></tr>
+      <tr><td>Hats shipped in the US, 1 to <span data-ship="maxFlat">2</span> hats</td><td data-ship-money="flat">$8</td></tr>
+      <tr><td>Hats shipped in the US, <span data-ship="bulkFrom">3</span> or more hats</td><td data-ship-money="bulk">$12</td></tr>
+      <tr><td>Paintings and other work</td><td>Quoted per piece. You approve the price before you pay.</td></tr>
+    </table>
+    <p>Hats ship by USPS with tracking. Shipping is United States only for now. If you are outside the US, send a message and Bruno will work out a quote.</p>
+    <h3>When</h3>
+    <ul>
+      <li>Orders ship within <b>5 business days</b> of payment. Tracking is emailed when your order ships.</li>
+      <li>USPS usually delivers within a few business days of shipping. Delivery dates are USPS estimates, not promises.</li>
+      <li>If Bruno cannot ship in time, you will get an email with a new date and a free, easy way to cancel for a full refund. Nothing ships late without your OK.</li>
+    </ul>
+    <h3>Meet-ups</h3>
+    <p>After your order, Bruno reaches out to set a time and a public spot in Queens. Please bring your order confirmation.</p>
+    <h3>Lost or damaged in transit</h3>
+    <p>Tell us within 7 days of delivery (or of the expected delivery date if it never arrives). Bruno will file the carrier claim and refund or replace the piece where possible. Because every piece is one of one, a replacement may not be possible and a full refund is the fallback.</p>
+  </section>
+
+  <section id="returns">
+    <h2>Returns and refunds</h2>
+    <p class="note">Every piece is handmade and one of one. Small differences from photos, such as placement of studs, beads and patches, are part of the work and are not defects.</p>
+    <h3>Hats</h3>
+    <ul>
+      <li>You can return a hat for a refund if you contact us <b>within 14 days of delivery</b> and the hat is unworn, undamaged and has all its beads, studs, charms and patches.</li>
+      <li>Refunds go back to your original payment method as cash. We do not push store credit unless you ask for it.</li>
+      <li>Return shipping is paid by you, unless the hat arrived damaged or is not as described. In that case Bruno pays.</li>
+      <li>There is no restocking fee.</li>
+      <li>Your order number or the email you ordered with is your proof of purchase. We cannot refund a purchase we cannot match to an order.</li>
+      <li>Refunds are issued within 7 business days of Bruno receiving the hat back.</li>
+    </ul>
+    <h3>Paintings, collage work and commissions</h3>
+    <ul>
+      <li>These are <b>final sale</b>, with one exception: if a piece arrives damaged or is materially different from how it was described, contact us within 7 days of delivery for a refund.</li>
+      <li>Commissions are agreed in writing first. Deposits are not refundable once work has started.</li>
+    </ul>
+    <h3>Cancelling before it ships</h3>
+    <p>You can cancel any order that has not shipped for a full refund.</p>
+    <h3>Sale and "as is" items</h3>
+    <p>There are none right now. If a piece is ever marked final sale or as is, it will say so next to the item before you buy.</p>
+    <h3>How to start a return</h3>
+    <p>Message Bruno with your order number: <span data-contact>on Instagram @Bruno.Saquicela</span>. You can also ask at any time for a written copy of this policy.</p>
+  </section>
+
+  <section id="privacy">
+    <h2>Privacy</h2>
+    <h3>What we collect</h3>
+    <p>Only what you type when you order: your name, email, phone (optional), shipping address and any note to Bruno. Your cart is saved in your own browser and is not sent anywhere until you place an order.</p>
+    <h3>How we use it</h3>
+    <ul>
+      <li>To fill your order, ship it, and contact you about it.</li>
+      <li>To keep the records that tax and accounting rules require.</li>
+      <li>We do not sell your information and we do not send marketing email unless you ask for it.</li>
+    </ul>
+    <h3>Who else sees it</h3>
+    <ul>
+      <li>Our payment processor, when card payments are switched on. Bruno never sees or stores your full card number.</li>
+      <li>The shipping carrier, which gets your name and address.</li>
+      <li>Tax or legal authorities, only if the law requires it.</li>
+    </ul>
+    <h3>Things to know</h3>
+    <ul>
+      <li>This site loads its fonts from Google Fonts, so your browser contacts Google when a page opens.</li>
+      <li>Links to Instagram take you to a site with its own privacy policy.</li>
+      <li>This site is not directed at children under 13.</li>
+    </ul>
+    <h3>Your choices</h3>
+    <p>To see, correct or delete the information we hold about you, message Bruno: <span data-contact>on Instagram @Bruno.Saquicela</span>. Some order records must be kept for tax reasons, but we will delete what we are allowed to.</p>
+  </section>
+
+  <section id="terms">
+    <h2>Terms</h2>
+    <h3>One of one</h3>
+    <p>Each piece is a single original. The first paid order gets it. If a piece is sold in person before your order is confirmed, we will cancel and refund you in full.</p>
+    <h3>Prices and sales tax</h3>
+    <p>Prices are in US dollars. Sales tax is not charged on hats priced under $110, which New York State and New York City exempt as clothing, and shipping that is listed separately is exempt along with them. If tax applies to another piece, it is shown before you pay.</p>
+    <h3>About the photos</h3>
+    <p>Photos are of the real pieces. Some "clean views" have the background removed, and on some hats the clean view is a digital front-on recreation made from Bruno's photo so the whole hat can be shown. The "Original photo" on each item page is the unedited photo of the real hat. Colors vary by screen.</p>
+    <h3>Safety</h3>
+    <p>Hats and some other work have small beads, studs and charms. They are adult art and fashion pieces, not toys. Keep them away from children under 3 and check that everything is secure before wearing.</p>
+    <h3>Copyright</h3>
+    <p>The artwork, designs and photographs on this site are &copy; 2026 Bruno Saquicela. Buying a piece gives you the object, not the right to copy or reproduce its design. Please ask first.</p>
+    <h3>Law</h3>
+    <p>These terms are governed by the laws of the State of New York.</p>
+    <p class="fine">Questions about any of this: <span data-contact>message Bruno on Instagram @Bruno.Saquicela</span>.</p>
+  </section>
+</main>
+<script src="data.js?v=11041815"></script>
+<script src="shop.js?v=11041815"></script>
+<script>
+(() => {
+  const S = window.SHIPPING || { flat: 8, bulk: 12, maxFlat: 2 };
+  const money = n => "$" + (Number(n) % 1 ? Number(n).toFixed(2) : Number(n));
+  document.querySelectorAll("[data-ship-money]").forEach(el => el.textContent = money(S[el.dataset.shipMoney]));
+  document.querySelectorAll('[data-ship="maxFlat"]').forEach(el => el.textContent = S.maxFlat);
+  document.querySelectorAll('[data-ship="bulkFrom"]').forEach(el => el.textContent = S.maxFlat + 1);
+  const C = window.CONTACT || {}, ig = (C.instagram || "").replace(/^@/, "");
+  const parts = [];
+  if (C.email) parts.push("email " + C.email);
+  if (ig) parts.push("Instagram @" + ig);
+  if (parts.length) document.querySelectorAll("[data-contact]").forEach(el => el.textContent = parts.join(" or "));
+})();
+</script>

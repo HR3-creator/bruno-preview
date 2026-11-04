@@ -47,7 +47,7 @@ dd{margin:0}
   font:800 15px/1 var(--f);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;cursor:pointer}
 .btn.ghost{background:transparent;color:var(--ink)}
 .btn.added{background:var(--street);border-color:var(--street)}
-.fine{margin:16px 0 0;font-size:13px;line-height:1.5;color:var(--muted)}
+.fine{margin:16px 0 0;font-size:13px;line-height:1.5;color:var(--muted)}.fine a{color:var(--ink);text-underline-offset:2px}
 .msg{min-height:1.2em;margin:10px 0 0;font-size:14px;color:var(--street);font-weight:600}
 .more{grid-column:1/-1}
 .more h2{margin:10px 0 14px;color:#F2EFE6;font:800 20px/1 var(--f);letter-spacing:.04em;text-transform:uppercase}
@@ -78,11 +78,13 @@ dd{margin:0}
     <div class="actions" id="actions"></div>
     <p class="msg" id="msg" role="status"></p>
     <p class="fine" id="fine"></p>
+    <p class="fine" id="flatnote" hidden></p>
+    <p class="fine" id="policy" hidden></p>
   </section>
   <section class="more" id="more" aria-label="More pieces" hidden><h2>More on the pole</h2><div class="strip" id="strip"></div></section>
 </main>
-<script src="data.js?v=11041745"></script>
-<script src="shop.js?v=11041745"></script>
+<script src="data.js?v=11041815"></script>
+<script src="shop.js?v=11041815"></script>
 <script>
 (() => {
   const $ = id => document.getElementById(id), S = window.Shop, esc = S.esc;
@@ -167,6 +169,20 @@ dd{margin:0}
     $("fine").textContent = "Only one exists. It stays available until someone checks out." + (typeof w.price === "number" ? "" : " Price is confirmed by Bruno before payment.");
   }
   S.onChange(renderActions);
+
+  /* Photo disclosure: the "-flat" clean views are regenerated front-on images, so say so and point to the real photo */
+  if (isHat && /-flat\./.test(String((w.pole || w).image))) {
+    $("flatnote").hidden = false;
+    $("flatnote").textContent = "The clean view is a digital front-on recreation of this hat so you can see the whole design. Tap \"Original photo\" to see the real hat as photographed.";
+  }
+  /* Policy links next to the buy button */
+  if (forSale) {
+    const rate = window.SHIPPING || { flat: 8 };
+    $("policy").hidden = false;
+    $("policy").innerHTML = isHat
+      ? `Ships in the US for ${esc(S.money(rate.flat))} or meet up in Queens for free. <a href="policies.html#shipping">Shipping</a> · <a href="policies.html#returns">14-day returns</a>`
+      : `Shipping is quoted per piece. <a href="policies.html#shipping">Shipping</a> · <a href="policies.html#returns">Returns</a>`;
+  }
 
   /* More pieces for sale */
   const others = (window.WORKS || []).filter(x => x.status === "Available" && x.id !== w.id).slice(0, 12);

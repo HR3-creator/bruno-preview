@@ -7,7 +7,10 @@
    title is a working description until Bruno names the piece.
    ===================================================================== */
 /* Contact shown in the site footer and used to send orders. Fill these in and the footer + "send order" step turn on. */
-window.CONTACT = { email: "", instagram: "" };
+window.CONTACT = { email: "", instagram: "Bruno.Saquicela" };
+/* Shipping rates in US dollars, US addresses only. Hats: flat rate up to maxFlat hats, bulk rate above that.
+   Paintings and other work are quoted per piece by Bruno. Edit here and checkout + policies.html update together. */
+window.SHIPPING = { flat: 8, bulk: 12, maxFlat: 2, country: "US" };
 window.SHOW_UNDECIDED = true;
 window.WORKS = [
  {
