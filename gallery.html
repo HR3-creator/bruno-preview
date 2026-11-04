@@ -122,8 +122,8 @@ dialog::backdrop{background:rgba(8,10,22,.7)}
   </div>
 </dialog>
 
-<script src="data.js?v=11011554"></script>
-<script src="shop.js?v=11011554"></script>
+<script src="data.js?v=11041435"></script>
+<script src="shop.js?v=11041435"></script>
 <script>
 (() => {
   const $ = id => document.getElementById(id);
@@ -156,7 +156,9 @@ dialog::backdrop{background:rgba(8,10,22,.7)}
     const st = STATUS[w.status], tilt = ((i * 37 % 7) - 3) * .35;
     const pic = w.pole || w;   /* clean flat-lay when one exists; real photo is one tap away in the details */
     const art = w.cutout
-      ? `<span class="object ${w.kind}"><img src="${esc(pic.image)}" alt="${esc(w.title)}" width="${pic.w}" height="${pic.h}" decoding="async"></span>`
+      ? (w.back && window.Shop
+        ? `<span class="object ${w.kind} flipcard" style="position:relative"><span class="flipbox" style="position:relative;display:block;aspect-ratio:${pic.w}/${pic.h}"><span class="fl-in"><img class="fl-front" src="${esc(pic.image)}" alt="${esc(w.title)}" width="${pic.w}" height="${pic.h}" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain"><span class="fl-back"><img src="${esc(w.back.image)}" alt="${esc(w.title)} (back)" decoding="async"></span></span></span>${window.Shop.flipButton()}</span>`
+        : `<span class="object ${w.kind}"><img src="${esc(pic.image)}" alt="${esc(w.title)}" width="${pic.w}" height="${pic.h}" decoding="async"></span>`)
       : `<span class="framed"><img src="${esc(w.image)}" alt="${esc(w.title)}" width="${w.w}" height="${w.h}" decoding="async"></span>`;
     return `<button class="work" type="button" data-id="${esc(w.id)}" data-status="${st.key}" data-kind="${w.kind}" aria-label="${esc(w.title)}, ${esc(st.label)}. Open details.">
       <span class="nail" aria-hidden="true"></span><span class="hang" style="--tilt:${tilt.toFixed(2)}deg">${art}</span>
@@ -199,9 +201,11 @@ dialog::backdrop{background:rgba(8,10,22,.7)}
   wall.addEventListener("click", e => {
     const b = e.target.closest(".work"); if (!b) return;
     const w = byId.get(b.dataset.id), st = STATUS[w.status];
-    const dImg = $("dImg"), swap = $("dSwap"), cleanSrc = (w.pole || w).image, realSrc = (w.original || w).image; let showReal = false;
-    const setPic = () => { dImg.src = showReal ? realSrc : cleanSrc; swap.textContent = showReal ? "See clean view" : "See original photo"; };
-    dImg.alt = w.title; swap.hidden = cleanSrc === realSrc; setPic();
+    const dImg = $("dImg"), swap = $("dSwap"); let showReal = false, side = 0;
+    const cleanS = [(w.pole || w).image, w.back ? w.back.image : null], realS = [(w.original || w).image, w.back ? (w.back.original || w.back.image) : null];
+    const setPic = () => { dImg.src = (showReal ? realS : cleanS)[side]; swap.textContent = showReal ? "See clean view" : "See original photo"; };
+    dImg.alt = w.title; swap.hidden = cleanS[0] === realS[0]; dImg.onclick = null; dImg.classList.remove("flipimg"); setPic();
+    if (w.back && window.Shop) dImg.onclick = () => { dImg.classList.add("flipimg", "turning"); setTimeout(() => { side = 1 - side; setPic(); dImg.classList.remove("turning"); }, 220); };
     swap.onclick = () => { showReal = !showReal; setPic(); };
     $("dKind").textContent = w.type + " · " + w.id; $("dTitle").textContent = w.title;
     $("dStatus").textContent = w.status === "Available" ? "For sale · " + price(w.price) : st.label;

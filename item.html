@@ -56,6 +56,7 @@ dd{margin:0}
 .strip img{max-width:100%;max-height:112px;object-fit:contain;filter:drop-shadow(0 10px 10px rgba(0,0,0,.45))}
 .strip span{display:block;margin-top:6px;font:700 11px/1.3 var(--mono);letter-spacing:.06em;text-transform:uppercase}
 .missing{grid-column:1/-1;color:#F2EFE6;text-align:center;padding:60px 0}
+.fliphint{margin:8px 0 0;text-align:center;color:#E9E4D8;font:700 11px/1 "Overpass Mono",monospace;letter-spacing:.12em;text-transform:uppercase;opacity:.85}
 </style>
 <body>
 <nav class="top" aria-label="Site"><a class="crumb" href="index.html">&larr; The pole</a><a class="crumb" href="gallery.html">Gallery wall</a></nav>
@@ -79,8 +80,8 @@ dd{margin:0}
   </section>
   <section class="more" id="more" aria-label="More pieces" hidden><h2>More on the pole</h2><div class="strip" id="strip"></div></section>
 </main>
-<script src="data.js?v=11011554"></script>
-<script src="shop.js?v=11011554"></script>
+<script src="data.js?v=11041435"></script>
+<script src="shop.js?v=11041435"></script>
 <script>
 (() => {
   const $ = id => document.getElementById(id), S = window.Shop, esc = S.esc;
@@ -106,8 +107,10 @@ dd{margin:0}
 
   /* Images: clean view first, then the original photo, then any extra photos (front/back) listed in w.photos */
   const pic = $("pic"), stage = $("stage");
-  const views = [{ src: (w.pole || w).image, label: "Clean view", clean: true }];
-  if ((w.original || w).image !== views[0].src) views.push({ src: (w.original || w).image, label: "Original photo" });
+  const views = [{ src: (w.pole || w).image, label: w.back ? "Front" : "Clean view", clean: true, pair: w.back ? 1 : -1 }];
+  if (w.back) views.push({ src: w.back.image, label: "Back", clean: true, pair: 0 });
+  if ((w.original || w).image !== views[0].src) views.push({ src: (w.original || w).image, label: w.back ? "Front photo" : "Original photo", pair: w.back && w.back.original ? views.length + 1 : -1 });
+  if (w.back && w.back.original) views.push({ src: w.back.original, label: "Back photo", pair: views.length - 1 });
   (w.photos || []).forEach((p, i) => { const src = typeof p === "string" ? p : p.image; if (src && !views.some(v => v.src === src)) views.push({ src, label: (p && p.label) || "Photo " + (i + 1) }); });
   if (views.length === 1) views[0].clean = !!w.cutout;
   const tg = $("toggle");
@@ -125,6 +128,16 @@ dd{margin:0}
       if (Math.abs(dx) > 50) { const cur = [...tg.querySelectorAll("button")].findIndex(b => b.getAttribute("aria-pressed") === "true"); show((cur + (dx < 0 ? 1 : views.length - 1)) % views.length); } });
   }
   show(0);
+  /* Tap the image to flip between front and back of the current view */
+  if (w.back) {
+    pic.classList.add("flipimg"); pic.title = "Tap to flip";
+    pic.addEventListener("click", () => {
+      const cur = [...tg.querySelectorAll("button")].findIndex(b => b.getAttribute("aria-pressed") === "true");
+      const nx = views[cur] && views[cur].pair; if (nx === undefined || nx < 0) return;
+      pic.classList.add("turning"); setTimeout(() => { show(nx); pic.classList.remove("turning"); }, 220);
+    });
+    const hint = document.createElement("p"); hint.className = "fliphint"; hint.textContent = "Tap the hat to flip it"; tg.after(hint);
+  }
 
   /* Actions */
   const actions = $("actions"), msg = $("msg");

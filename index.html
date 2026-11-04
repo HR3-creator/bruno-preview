@@ -170,6 +170,9 @@ dialog::backdrop{background:rgba(8,10,22,.64)}
   -webkit-background-clip:text;background-clip:text;
   filter:drop-shadow(0 -2px 0 rgba(0,0,0,.55)) drop-shadow(0 2px 0 rgba(255,255,255,.6)) drop-shadow(0 0 1px rgba(0,0,0,.35))}
 .stencil small{margin-top:16px;font:700 clamp(14px,3.6vw,26px)/1 var(--f-mono);letter-spacing:.5em;padding-left:.5em}
+.d-media{position:relative}.d-hint{position:absolute;left:10px;bottom:10px;padding:7px 10px;border-radius:6px;background:rgba(20,20,20,.72);color:#fff;font:700 11px/1 "Overpass Mono",monospace;letter-spacing:.08em;text-transform:uppercase;pointer-events:none}
+.piece{position:relative}
+.piece .flipbtn{bottom:52px}
 </style>
 <div class="sky" aria-hidden="true">
   <div class="ph day" id="phDay"></div><div class="ph gold" id="phGold"></div><div class="ph night" id="phNight"></div>
@@ -202,7 +205,7 @@ dialog::backdrop{background:rgba(8,10,22,.64)}
 
 <dialog id="detail" aria-labelledby="dTitle">
   <div class="d-grid">
-    <div class="d-media" id="dMedia"><img id="dImg" alt=""></div>
+    <div class="d-media" id="dMedia"><img id="dImg" alt=""><span class="d-hint" id="dFlipHint" hidden></span></div>
     <div class="d-info">
       <p class="d-kind" id="dKind"></p>
       <h2 id="dTitle"></h2>
@@ -214,8 +217,8 @@ dialog::backdrop{background:rgba(8,10,22,.64)}
   </div>
 </dialog>
 
-<script src="data.js?v=11011554"></script>
-<script src="shop.js?v=11011554"></script>
+<script src="data.js?v=11041435"></script>
+<script src="shop.js?v=11041435"></script>
 <script>
 /* =====================================================================
    EDIT HERE. Everything on the page comes from this one object.
@@ -343,8 +346,11 @@ const CONFIG = {
             <path d="M50.9 2v12a6.2 6.2 0 1 1-6.3 6.6" fill="none" stroke="rgba(10,12,14,.55)" stroke-width=".8" stroke-linecap="round"/></svg>`
         : `<svg class="wire" viewBox="0 0 100 46" preserveAspectRatio="none" aria-hidden="true"><path d="M50 2 L6 46 M50 2 L94 46" fill="none" stroke="#1F2427" stroke-width="1.6" vector-effect="non-scaling-stroke"/><circle cx="50" cy="3" r="3" fill="#1F2427"/></svg>`;
       const ratioCss = isHat ? "400 / 320" : `600 / ${Math.round(600 / (it.ratio || 1))}`;
+      const frontImg = `<img class="fl-front" src="${esc(it.image)}" alt="${esc(it.title)}" loading="lazy" style="width:${(10000 / cr.w).toFixed(2)}%;left:${(-cr.l / cr.w * 100).toFixed(2)}%;top:${(-cr.t / cr.h * 100).toFixed(2)}%">`;
       const art = it.image
-        ? `<div class="cut" style="aspect-ratio:${ar.toFixed(4)}"><img src="${esc(it.image)}" alt="${esc(it.title)}" loading="lazy" style="width:${(10000 / cr.w).toFixed(2)}%;left:${(-cr.l / cr.w * 100).toFixed(2)}%;top:${(-cr.t / cr.h * 100).toFixed(2)}%"></div>`
+        ? (it.back && window.Shop
+          ? `<div class="cut flipbox" style="aspect-ratio:${ar.toFixed(4)}"><div class="fl-in">${frontImg}<div class="fl-back"><img src="${esc(it.back.image)}" alt="${esc(it.title)} (back)" loading="lazy"></div></div></div>${window.Shop.flipButton()}`
+          : `<div class="cut" style="aspect-ratio:${ar.toFixed(4)}">${frontImg}</div>`)
         : `<canvas role="img" aria-label="Placeholder artwork for ${esc(it.title)}"></canvas>`;
       const body = it.image ? art : isHat ? `<div class="hat-art">${art}</div>` : `<div class="frame">${art}</div>`;
       row.innerHTML = `<span class="arm" aria-hidden="true"></span><span class="clamp" aria-hidden="true"></span><span class="collar" aria-hidden="true"></span>
@@ -358,7 +364,7 @@ const CONFIG = {
       if (cv) isHat ? drawHat(cv, s) : drawPainting(cv, s, it.ratio);
       registry.set(it.id, { it, kind: isHat ? "Hat" : "Painting", cv, img: row.querySelector("img") });
       /* Hook fit: find the first solid pixel of the hat directly under the wire and lift the hat so it touches the hook. */
-      const hatImg = isHat && row.querySelector(".cut img");
+      const hatImg = isHat && row.querySelector(".cut img.fl-front");
       if (hatImg) {
         const fit = () => {
           try {
@@ -396,6 +402,9 @@ const CONFIG = {
     const rec = registry.get(b.dataset.id); if (!rec) return;
     const { it, kind, cv, img } = rec;
     $("dImg").src = img ? img.src : cv.toDataURL("image/png"); $("dImg").alt = it.title;
+    $("dImg").onclick = null; $("dImg").classList.remove("flipimg"); $("dFlipHint").hidden = !it.back;
+    if (it.back && window.Shop) window.Shop.flipImg($("dImg"), [img.src, new URL(it.back.image, location.href).href], s => { $("dFlipHint").textContent = s ? "Back · tap to flip" : "Front · tap to flip"; });
+    $("dFlipHint").textContent = "Front · tap to flip";
     $("dMedia").classList.toggle("light", kind === "Hat");
     $("dKind").textContent = kind + " · " + it.id; $("dTitle").textContent = it.title;
     $("dMedium").textContent = it.medium || "TBD"; $("dMediumL").hidden = $("dMedium").hidden = true; $("dSize").textContent = it.size || ""; $("dSizeL").hidden = $("dSize").hidden = !it.size; $("dPrice").textContent = price(it.price);

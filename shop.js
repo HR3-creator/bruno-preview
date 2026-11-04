@@ -123,6 +123,40 @@
     setTimeout(() => { if (!drawer.classList.contains("on")) drawer.hidden = true; }, 320);
     if (lastFocus && lastFocus.focus) lastFocus.focus();
   }
+
+  /* Front/back flip. Cards: [data-flip] button toggles .flipped on the closest .flipbox.
+     Single images: Shop.flipImg(img, [srcFront, srcBack]) turns the image on tap. */
+  const flipCss = document.createElement("style");
+  flipCss.textContent = `.flipbox{perspective:1400px}
+  .flipbox .fl-in{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.3,.7,.2,1)}
+  .flipbox.flipped .fl-in{transform:rotateY(180deg)}
+  .flipbox .fl-front,.flipbox .fl-back{-webkit-backface-visibility:hidden;backface-visibility:hidden}
+  .flipbox .fl-back{position:absolute;inset:0;transform:rotateY(180deg)}
+  .flipbox .fl-back img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+  .flipbtn{position:absolute;z-index:4;right:-8px;bottom:8px;display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 10px;border-radius:15px;
+    background:rgba(22,24,27,.82);color:#F4EFE2;border:1.5px solid rgba(255,255,255,.75);font:800 11px/1 "Overpass Mono",monospace;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;
+    box-shadow:0 4px 10px rgba(0,0,0,.35);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+  .flipbtn svg{width:14px;height:14px}
+  .flipcard .flipbtn{right:4px;bottom:10px}
+  .flipimg{transition:transform .22s ease-in;cursor:pointer}
+  .flipimg.turning{transform:perspective(1200px) rotateY(90deg)}
+  @media (prefers-reduced-motion:reduce){.flipbox .fl-in,.flipimg{transition:none}}`;
+  document.head.appendChild(flipCss);
+  const flipIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"/><path d="M3 21v-5h5"/></svg>`;
+  Shop.flipButton = () => `<span class="flipbtn" role="button" tabindex="0" data-flip aria-label="Flip to see the back">${flipIcon}<span>Back</span></span>`;
+  function doFlip(btn) {
+    const box = btn.closest(".flipcard") ? btn.closest(".flipcard").querySelector(".flipbox") : btn.parentElement.querySelector(".flipbox");
+    if (!box) return; const on = box.classList.toggle("flipped");
+    btn.querySelector("span").textContent = on ? "Front" : "Back"; btn.setAttribute("aria-label", on ? "Flip to see the front" : "Flip to see the back");
+  }
+  document.addEventListener("click", e => { const b = e.target.closest("[data-flip]"); if (!b) return; e.preventDefault(); e.stopPropagation(); doFlip(b); }, true);
+  document.addEventListener("keydown", e => { const b = e.target.closest && e.target.closest("[data-flip]"); if (b && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); e.stopPropagation(); doFlip(b); } }, true);
+  Shop.flipImg = (img, srcs, onSide) => {
+    let side = 0; img.classList.add("flipimg"); img.title = "Tap to flip";
+    const go = () => { if (img.classList.contains("turning")) return; img.classList.add("turning");
+      setTimeout(() => { side = 1 - side; img.src = srcs[side]; if (onSide) onSide(side); img.classList.remove("turning"); }, 220); };
+    img.onclick = go; return { go, get side() { return side; }, set(s) { side = s; img.src = srcs[s]; } };
+  };
   /* Contact footer: appears on every page once CONTACT.email or CONTACT.instagram is filled in data.js */
   function footer() {
     const C = window.CONTACT || {}; if (!C.email && !C.instagram) return;

@@ -97,7 +97,7 @@ window.WORKS = [
   "kind": "hat",
   "type": "Hat",
   "status": "Available",
-  "title": "Black beanie with blue patch",
+  "title": "Camo beanie with blue heart",
   "medium": "",
   "size": "One size fits most",
   "year": "2026",
@@ -106,7 +106,9 @@ window.WORKS = [
   "w": 709,
   "h": 720,
   "cutout": true,
-  "original": {"image": "img/orig/h-14.webp", "w": 1200, "h": 1600}
+  "original": {"image": "img/orig/h-14-front.webp", "w": 1591, "h": 1600},
+  "pole": {"image": "img/h-14-front.webp", "w": 608, "h": 720},
+  "back": {"image": "img/h-14-back.webp", "w": 579, "h": 720, "original": "img/orig/h-14-back.webp"}
  },
  {
   "id": "H-15",
@@ -228,7 +230,7 @@ window.WORKS = [
   "id": "H-23",
   "kind": "hat",
   "type": "Hat",
-  "status": "Available",
+  "status": "Exclude", "note": "Back side of H-14 (camo hat), merged 2026-11-04",
   "title": "Black beanie with heart",
   "medium": "",
   "size": "One size fits most",
