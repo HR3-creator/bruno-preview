@@ -107,9 +107,9 @@ window.WORKS = [
   "h": 720,
   "cutout": true,
   "original": {"image": "img/orig/h-14-front.webp", "w": 1591, "h": 1600},
-  "pole": {"image": "img/h-14-front.webp", "w": 608, "h": 720},
+  "pole": {"image": "img/h-14-front.webp?v=cut2", "w": 597, "h": 720},
   "photos": [{"image": "img/orig/h-14-angle.webp", "label": "On display"}],
-  "back": {"image": "img/h-14-back.webp", "w": 579, "h": 720, "original": "img/orig/h-14-back.webp"}
+  "back": {"image": "img/h-14-back.webp?v=cut2", "w": 614, "h": 720, "original": "img/orig/h-14-back.webp"}
  },
  {
   "id": "H-15",
@@ -339,9 +339,9 @@ window.WORKS = [
   "size": "One size fits most",
   "year": "2026",
   "price": 75,
-  "image": "img/h-27-front.webp",
-  "w": 572,
-  "h": 565,
+  "image": "img/h-27-front.webp?v=cut2",
+  "w": 710,
+  "h": 720,
   "cutout": true,
   "original": {
    "image": "img/orig/h-27-front.webp",
@@ -350,9 +350,9 @@ window.WORKS = [
   },
   "note": "New photos from Bruno, Drive folder 2 (added 2026-11-04)",
   "back": {
-   "image": "img/h-27-back.webp",
-   "w": 460,
-   "h": 416,
+   "image": "img/h-27-back.webp?v=cut2",
+   "w": 694,
+   "h": 720,
    "original": "img/orig/h-27-back.webp"
   },
   "photos": [
@@ -372,9 +372,9 @@ window.WORKS = [
   "size": "One size fits most",
   "year": "2026",
   "price": 75,
-  "image": "img/h-28-front.webp",
-  "w": 550,
-  "h": 457,
+  "image": "img/h-28-front.webp?v=cut2",
+  "w": 720,
+  "h": 600,
   "cutout": true,
   "original": {
    "image": "img/orig/h-28-front.webp",
@@ -383,9 +383,9 @@ window.WORKS = [
   },
   "note": "New photos from Bruno, Drive folder 3 (added 2026-11-04)",
   "back": {
-   "image": "img/h-28-back.webp",
-   "w": 533,
-   "h": 542,
+   "image": "img/h-28-back.webp?v=cut2",
+   "w": 719,
+   "h": 720,
    "original": "img/orig/h-28-back.webp"
   }
  },
@@ -399,9 +399,9 @@ window.WORKS = [
   "size": "One size fits most",
   "year": "2026",
   "price": 75,
-  "image": "img/h-29-front.webp",
-  "w": 527,
-  "h": 498,
+  "image": "img/h-29-front.webp?v=cut2",
+  "w": 720,
+  "h": 717,
   "cutout": true,
   "original": {
    "image": "img/orig/h-29-front.webp",
@@ -420,8 +420,8 @@ window.WORKS = [
   "size": "One size fits most",
   "year": "2026",
   "price": 75,
-  "image": "img/h-30-front.webp",
-  "w": 542,
+  "image": "img/h-30-front.webp?v=cut2",
+  "w": 571,
   "h": 720,
   "cutout": true,
   "original": {
@@ -431,8 +431,8 @@ window.WORKS = [
   },
   "note": "New photos from Bruno, Drive folder 5 (added 2026-11-04)",
   "back": {
-   "image": "img/h-30-back.webp",
-   "w": 547,
+   "image": "img/h-30-back.webp?v=cut2",
+   "w": 538,
    "h": 720,
    "original": "img/orig/h-30-back.webp"
   }
@@ -447,9 +447,9 @@ window.WORKS = [
   "size": "One size fits most",
   "year": "2026",
   "price": 75,
-  "image": "img/h-31-front.webp",
-  "w": 564,
-  "h": 685,
+  "image": "img/h-31-front.webp?v=cut2",
+  "w": 693,
+  "h": 720,
   "cutout": true,
   "original": {
    "image": "img/orig/h-31-front.webp",
@@ -458,9 +458,9 @@ window.WORKS = [
   },
   "note": "New photos from Bruno, Drive folder 7 (added 2026-11-04)",
   "back": {
-   "image": "img/h-31-back.webp",
-   "w": 501,
-   "h": 534,
+   "image": "img/h-31-back.webp?v=cut2",
+   "w": 712,
+   "h": 720,
    "original": "img/orig/h-31-back.webp"
   }
  },
