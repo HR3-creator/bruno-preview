@@ -108,6 +108,7 @@ window.WORKS = [
   "cutout": true,
   "original": {"image": "img/orig/h-14-front.webp", "w": 1591, "h": 1600},
   "pole": {"image": "img/h-14-front.webp", "w": 608, "h": 720},
+  "photos": [{"image": "img/orig/h-14-angle.webp", "label": "On display"}],
   "back": {"image": "img/h-14-back.webp", "w": 579, "h": 720, "original": "img/orig/h-14-back.webp"}
  },
  {
@@ -327,6 +328,141 @@ window.WORKS = [
   "cutout": true,
   "original": {"image": "img/orig/h-26.webp", "w": 1200, "h": 1600},
   "pole": {"image": "img/h-26-flat.webp", "w": 658, "h": 720}
+ },
+ {
+  "id": "H-27",
+  "kind": "hat",
+  "type": "Hat",
+  "status": "Available",
+  "title": "Black spotted beanie with butterfly",
+  "medium": "",
+  "size": "One size fits most",
+  "year": "2026",
+  "price": 75,
+  "image": "img/h-27-front.webp",
+  "w": 572,
+  "h": 565,
+  "cutout": true,
+  "original": {
+   "image": "img/orig/h-27-front.webp",
+   "w": 1200,
+   "h": 1600
+  },
+  "note": "New photos from Bruno, Drive folder 2 (added 2026-11-04)",
+  "back": {
+   "image": "img/h-27-back.webp",
+   "w": 460,
+   "h": 416,
+   "original": "img/orig/h-27-back.webp"
+  },
+  "photos": [
+   {
+    "image": "img/orig/h-27-angle.webp",
+    "label": "On display"
+   }
+  ]
+ },
+ {
+  "id": "H-28",
+  "kind": "hat",
+  "type": "Hat",
+  "status": "Available",
+  "title": "Black spotted beanie with orange heart",
+  "medium": "",
+  "size": "One size fits most",
+  "year": "2026",
+  "price": 75,
+  "image": "img/h-28-front.webp",
+  "w": 550,
+  "h": 457,
+  "cutout": true,
+  "original": {
+   "image": "img/orig/h-28-front.webp",
+   "w": 1200,
+   "h": 1600
+  },
+  "note": "New photos from Bruno, Drive folder 3 (added 2026-11-04)",
+  "back": {
+   "image": "img/h-28-back.webp",
+   "w": 533,
+   "h": 542,
+   "original": "img/orig/h-28-back.webp"
+  }
+ },
+ {
+  "id": "H-29",
+  "kind": "hat",
+  "type": "Hat",
+  "status": "Available",
+  "title": "White leopard beanie",
+  "medium": "",
+  "size": "One size fits most",
+  "year": "2026",
+  "price": 75,
+  "image": "img/h-29-front.webp",
+  "w": 527,
+  "h": 498,
+  "cutout": true,
+  "original": {
+   "image": "img/orig/h-29-front.webp",
+   "w": 1052,
+   "h": 1600
+  },
+  "note": "New photos from Bruno, Drive folder 4 (added 2026-11-04)"
+ },
+ {
+  "id": "H-30",
+  "kind": "hat",
+  "type": "Hat",
+  "status": "Available",
+  "title": "Camo beanie with star patch",
+  "medium": "",
+  "size": "One size fits most",
+  "year": "2026",
+  "price": 75,
+  "image": "img/h-30-front.webp",
+  "w": 542,
+  "h": 720,
+  "cutout": true,
+  "original": {
+   "image": "img/orig/h-30-front.webp",
+   "w": 1200,
+   "h": 1600
+  },
+  "note": "New photos from Bruno, Drive folder 5 (added 2026-11-04)",
+  "back": {
+   "image": "img/h-30-back.webp",
+   "w": 547,
+   "h": 720,
+   "original": "img/orig/h-30-back.webp"
+  }
+ },
+ {
+  "id": "H-31",
+  "kind": "hat",
+  "type": "Hat",
+  "status": "Available",
+  "title": "Grey 'Queens' beanie",
+  "medium": "",
+  "size": "One size fits most",
+  "year": "2026",
+  "price": 75,
+  "image": "img/h-31-front.webp",
+  "w": 564,
+  "h": 685,
+  "cutout": true,
+  "original": {
+   "image": "img/orig/h-31-front.webp",
+   "w": 1200,
+   "h": 1600
+  },
+  "note": "New photos from Bruno, Drive folder 7 (added 2026-11-04)",
+  "back": {
+   "image": "img/h-31-back.webp",
+   "w": 501,
+   "h": 534,
+   "original": "img/orig/h-31-back.webp"
+  }
  },
  {
   "id": "P-01",
