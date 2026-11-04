@@ -90,7 +90,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--ink);outline:none}
       <legend>Delivery</legend>
       <div class="opts">
         <label class="opt"><input type="radio" name="ship" value="ship" checked><span>Ship to me (US only)<small id="shipSmall">Packed by Bruno, sent by USPS with tracking.</small></span><span class="amt" id="shipAmt">TBD</span></label>
-        <label class="opt"><input type="radio" name="ship" value="pickup"><span>Meet up in Queens, NY<small>Bruno reaches out after your order to set a time and a public spot.</small></span><span class="amt">Free</span></label>
+        <label class="opt"><input type="radio" name="ship" value="pickup"><span>Meet up in NYC<small>Bruno reaches out after your order to set a time and a public spot.</small></span><span class="amt">Free</span></label>
       </div>
     </fieldset>
     <fieldset id="addr">
@@ -114,7 +114,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--ink);outline:none}
       <div class="pay"><b>Secure card payment opens here at launch.</b> In this preview, placing an order shows the confirmation screen only. Pieces without a price are confirmed by Bruno by email before you're charged.</div>
     </fieldset>
     <button class="btn" type="submit" id="place">Place order</button>
-    <p class="fine">By placing an order you agree to the <a href="policies.html#terms" target="_blank" rel="noopener">terms</a> and the <a href="policies.html#returns" target="_blank" rel="noopener">return policy</a>. Each piece is handmade and one of a kind, so small variations from photos are part of the work. See <a href="policies.html#shipping" target="_blank" rel="noopener">shipping</a> and <a href="policies.html#privacy" target="_blank" rel="noopener">privacy</a>.</p>
+    <p class="fine">By placing an order you agree to the <a href="policies.html#terms" target="_blank" rel="noopener">terms</a>. Each piece is handmade and one of a kind, so small variations from photos are part of the work. See <a href="policies.html#shipping" target="_blank" rel="noopener">shipping</a> and <a href="policies.html#privacy" target="_blank" rel="noopener">privacy</a>.</p>
   </form>
 
   <aside class="summary" aria-labelledby="sumh">
@@ -135,8 +135,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--ink);outline:none}
     <p class="fine" id="doneFine">Preview build: no payment was taken and no message was sent.</p>
   </div></section>
 </main>
-<script src="data.js?v=11041815"></script>
-<script src="shop.js?v=11041815"></script>
+<script src="data.js?v=11041725"></script>
+<script src="shop.js?v=11041725"></script>
 <script>
 (() => {
   const $ = id => document.getElementById(id), S = window.Shop, esc = S.esc;
@@ -194,14 +194,14 @@ input:focus,select:focus,textarea:focus{border-color:var(--ink);outline:none}
     const ref = "BS-" + Date.now().toString(36).toUpperCase().slice(-6);
     $("ref").textContent = ref;
     $("thanks").textContent = "Thank you, " + $("name").value.trim().split(/\s+/)[0];
-    $("doneTxt").textContent = `Bruno will email ${$("email").value.trim()} to confirm ${items.some(w => typeof w.price !== "number") ? "pricing, " : ""}${ship() === "pickup" ? "a meet-up time and place in Queens" : "shipping"} and payment.`;
+    $("doneTxt").textContent = `Bruno will email ${$("email").value.trim()} to confirm ${items.some(w => typeof w.price !== "number") ? "pricing, " : ""}${ship() === "pickup" ? "a meet-up time and place in NYC" : "shipping"} and payment.`;
     const shNow = S.shipping();
     $("doneLines").innerHTML = items.map(w => lineHtml(w, false)).join("");
     const C = window.CONTACT || {};
     if (C.email) {
       const total = items.reduce((a, w) => a + (typeof w.price === "number" ? w.price : 0), 0);
       const lines = items.map(w => `- ${w.id} ${w.title}: ${S.money(w.price)}`).join("\n");
-      const where = ship() === "pickup" ? "Meet up in Queens" : `Ship to: ${$("a1").value.trim()} ${$("a2").value.trim()}, ${$("city").value.trim()}, ${$("state").value.trim()} ${$("zip").value.trim()}`;
+      const where = ship() === "pickup" ? "Meet up in NYC" : `Ship to: ${$("a1").value.trim()} ${$("a2").value.trim()}, ${$("city").value.trim()}, ${$("state").value.trim()} ${$("zip").value.trim()}`;
       const body = `New order ${ref}\n\n${lines}\nItems total: ${S.money(total)}\nShipping: ${ship() === "pickup" ? "Free (meet-up)" : shNow.hats ? S.money(shNow.cost) + (shNow.quoted ? " for hats, plus a quote for the other work" : "") : "Quote needed"}\n\nName: ${$("name").value.trim()}\nEmail: ${$("email").value.trim()}\nPhone: ${$("phone").value.trim() || "-"}\n${where}\nNote: ${$("note").value.trim() || "-"}`;
       const a = $("sendOrder"); a.hidden = false;
       a.href = `mailto:${encodeURIComponent(C.email)}?subject=${encodeURIComponent("Order " + ref + " - Bruno Saquicela")}&body=${encodeURIComponent(body)}`;

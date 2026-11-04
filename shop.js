@@ -176,7 +176,7 @@
         + (ig ? `<a href="https://instagram.com/${encodeURIComponent(ig)}" target="_blank" rel="noopener">@${esc(ig)}</a>` : "") + `</p>`
       : "";
     f.innerHTML = contact
-      + `<nav class="sf-p" aria-label="Policies"><a href="policies.html#shipping">Shipping</a><a href="policies.html#returns">Returns</a><a href="policies.html#privacy">Privacy</a><a href="policies.html#terms">Terms</a></nav>`
+      + `<nav class="sf-p" aria-label="Policies"><a href="policies.html#shipping">Shipping</a><a href="policies.html#privacy">Privacy</a><a href="policies.html#terms">Terms</a></nav>`
       + `<p class="sf-c">&copy; 2026 Bruno Saquicela · Queens, NY</p>`;
     document.body.appendChild(f);
   }

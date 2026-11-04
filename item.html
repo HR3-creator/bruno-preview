@@ -83,8 +83,8 @@ dd{margin:0}
   </section>
   <section class="more" id="more" aria-label="More pieces" hidden><h2>More on the pole</h2><div class="strip" id="strip"></div></section>
 </main>
-<script src="data.js?v=11041815"></script>
-<script src="shop.js?v=11041815"></script>
+<script src="data.js?v=11041725"></script>
+<script src="shop.js?v=11041725"></script>
 <script>
 (() => {
   const $ = id => document.getElementById(id), S = window.Shop, esc = S.esc;
@@ -180,8 +180,8 @@ dd{margin:0}
     const rate = window.SHIPPING || { flat: 8 };
     $("policy").hidden = false;
     $("policy").innerHTML = isHat
-      ? `Ships in the US for ${esc(S.money(rate.flat))} or meet up in Queens for free. <a href="policies.html#shipping">Shipping</a> · <a href="policies.html#returns">14-day returns</a>`
-      : `Shipping is quoted per piece. <a href="policies.html#shipping">Shipping</a> · <a href="policies.html#returns">Returns</a>`;
+      ? `Ships in the US for ${esc(S.money(rate.flat))} or meet up in NYC for free. <a href="policies.html#shipping">Shipping policy</a>`
+      : `Shipping is quoted per piece. <a href="policies.html#shipping">Shipping policy</a>`;
   }
 
   /* More pieces for sale */
